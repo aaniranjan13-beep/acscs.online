@@ -1,0 +1,28 @@
+(function ($) {
+  Drupal.behaviors.applyFilter = {
+    attach: function (context, settings) {
+      if ($(".bentoBox").length) {
+        var bentoBox = $(".bentoBox");
+        var isProgrammaticClick = false; // flag to check for programmatic click
+        $(".bentoBox input").each(function () {
+          $(this).attr("tabindex", "-1");
+          $(this).parent().attr("tabindex", "0");
+        });
+        bentoBox.find("input").click(function (e) {
+          if (!isProgrammaticClick) {
+            isProgrammaticClick = true; // set the flag to true
+            bentoBox.find("input.form-submit").click();
+            isProgrammaticClick = false; // reset the flag
+          }
+        });
+        bentoBox.find("input").parent().keydown(function (e) {
+          var input = $(this).find("input");
+            if (e.keyCode == 13 || e.keyCode == 32) {
+              e.preventDefault();
+              input.click();
+            }
+        });
+      }
+    }
+  };
+})(jQuery);
