@@ -1,0 +1,85 @@
+export default class CarouselSwiper {
+  constructor(element) {
+    this.elements = {
+      root: element,
+      prev: element.querySelector(".swiper-button-prev"),
+      next: element.querySelector(".swiper-button-next"),
+      pause: element.querySelector(".swiper-pause"),
+    };
+    this.autoplay = true;
+
+    this.createSwiper();
+    this.elements.prev.addEventListener("click", () => this.prev());
+    this.elements.next.addEventListener("click", () => this.next());
+    this.elements.pause.addEventListener("click", () => this.pause());
+
+    this.elements.prev.addEventListener("keypress", (e) => {
+      if (e.key === "Enter") this.prev();
+    });
+    this.elements.next.addEventListener("keypress", (e) => {
+      if (e.key === "Enter") this.next();
+    });
+    this.elements.pause.addEventListener("keypress", (e) => {
+      if (e.key === "Enter") this.pause();
+    });
+  }
+
+  createSwiper() {
+    this.swiper = new window.Swiper(".home-swiper", {
+      modules: [
+        // window.SwiperNavigation,
+        window.Pagination,
+        window.Autoplay,
+        window.A11y,
+      ],
+      slidesPerView: 1,
+      spaceBetween: 20,
+      pagination: {
+        el: ".swiper-pagination",
+        clickable: true,
+      },
+      navigation: {
+        nextEl: ".swiper-button-next",
+        prevEl: ".swiper-button-prev",
+      },
+      autoplay: {
+        delay: 6000,
+      },
+      a11y: {
+        enabled: true,
+      },
+      loop: true,
+      speed: 1000,
+    });
+  }
+
+  prev() {
+    if (this.swiper) {
+      this.swiper.slidePrev();
+    }
+  }
+
+  next() {
+    if (this.swiper) {
+      this.swiper.slideNext();
+    }
+  }
+
+  pause() {
+    if (this.swiper) {
+      if (this.autoplay) {
+        this.swiper.autoplay.stop();
+        this.autoplay = false;
+        this.elements.pause.classList.add("swiper-pause--paused");
+      } else {
+        this.swiper.autoplay.start();
+        this.autoplay = true;
+        this.elements.pause.classList.remove("swiper-pause--paused");
+      }
+    }
+  }
+}
+
+document.querySelectorAll(".carousel").forEach((element) => {
+  new CarouselSwiper(element);
+});
