@@ -577,37 +577,37 @@ td .cell-sub{font-size:.75rem;color:#889;}
             </div>
             <div class="stat-card__icon"><i class="fas fa-users"></i></div>
           </div>
-          <div class="stat-card__change up"><i class="fas fa-arrow-up"></i> +12 this week</div>
+          <div class="stat-card__change up"><i class="fas fa-arrow-up"></i> +<span id="cnt-users-new">0</span> today</div>
         </div>
         <div class="stat-card stat-card--teal">
           <div class="stat-card__top">
             <div>
-              <div class="stat-card__value" id="cnt-logins">38</div>
+              <div class="stat-card__value" id="cnt-logins">0</div>
               <div class="stat-card__label">Logins Today</div>
             </div>
             <div class="stat-card__icon"><i class="fas fa-right-to-bracket"></i></div>
           </div>
-          <div class="stat-card__change up"><i class="fas fa-arrow-up"></i> +5 from yesterday</div>
+          <div class="stat-card__change up"><i class="fas fa-arrow-up"></i> Live count</div>
         </div>
         <div class="stat-card stat-card--green">
           <div class="stat-card__top">
             <div>
-              <div class="stat-card__value" id="cnt-docs">284</div>
-              <div class="stat-card__label">Documents</div>
+              <div class="stat-card__value" id="cnt-docs">0</div>
+              <div class="stat-card__label">Submissions</div>
             </div>
             <div class="stat-card__icon"><i class="fas fa-file-shield"></i></div>
           </div>
-          <div class="stat-card__change up"><i class="fas fa-arrow-up"></i> +8 new uploads</div>
+          <div class="stat-card__change up"><i class="fas fa-arrow-up"></i> Today only</div>
         </div>
         <div class="stat-card stat-card--red">
           <div class="stat-card__top">
             <div>
-              <div class="stat-card__value" id="cnt-alerts">7</div>
-              <div class="stat-card__label">Active Alerts</div>
+              <div class="stat-card__value" id="cnt-alerts">0</div>
+              <div class="stat-card__label">Pending Review</div>
             </div>
             <div class="stat-card__icon"><i class="fas fa-triangle-exclamation"></i></div>
           </div>
-          <div class="stat-card__change down"><i class="fas fa-arrow-up"></i> +2 new alerts</div>
+          <div class="stat-card__change down"><i class="fas fa-arrow-up"></i> Needs action</div>
         </div>
       </div>
 
@@ -677,31 +677,10 @@ td .cell-sub{font-size:.75rem;color:#889;}
           <div class="panel__title"><i class="fas fa-clock-rotate-left"></i> Recent Activity</div>
         </div>
         <div class="panel__body">
-          <div class="activity-list">
-            <div class="activity-item">
-              <div class="activity-icon login"><i class="fas fa-right-to-bracket"></i></div>
-              <div class="activity-text"><strong>John Smith</strong> logged in to the portal<p>IP: 203.24.xx.xx — Chrome / Windows</p></div>
-              <span class="activity-time">2 min ago</span>
-            </div>
-            <div class="activity-item">
-              <div class="activity-icon upload"><i class="fas fa-upload"></i></div>
-              <div class="activity-text"><strong>Sarah Lee</strong> uploaded a new document<p>ISM-Policy-v3.pdf — 2.4 MB</p></div>
-              <span class="activity-time">18 min ago</span>
-            </div>
-            <div class="activity-item">
-              <div class="activity-icon user"><i class="fas fa-user-plus"></i></div>
-              <div class="activity-text"><strong>Admin</strong> added a new user account<p>mark.wang@defence.gov.au — Analyst role</p></div>
-              <span class="activity-time">1 hr ago</span>
-            </div>
-            <div class="activity-item">
-              <div class="activity-icon warning"><i class="fas fa-triangle-exclamation"></i></div>
-              <div class="activity-text"><strong>System</strong> flagged a failed login attempt<p>3 failed attempts — james.k@example.com</p></div>
-              <span class="activity-time">2 hr ago</span>
-            </div>
-            <div class="activity-item">
-              <div class="activity-icon delete"><i class="fas fa-trash"></i></div>
-              <div class="activity-text"><strong>Admin</strong> deleted document<p>OLD-Advisory-2025.pdf removed</p></div>
-              <span class="activity-time">3 hr ago</span>
+          <div class="activity-list" id="activityFeed">
+            <div style="text-align:center;padding:32px;color:#aab;">
+              <i class="fas fa-clock" style="font-size:1.8rem;display:block;margin-bottom:8px;opacity:.4;"></i>
+              No activity yet today
             </div>
           </div>
         </div>
@@ -1135,29 +1114,54 @@ td .cell-sub{font-size:.75rem;color:#889;}
 'use strict';
 
 /* ── Sample Data ── */
-const users = [
-  { id:1, fname:'John',    lname:'Smith',    email:'john.smith@defence.gov.au',    phone:'0412 345 678', role:'Analyst',  card:'4567', joined:'12 Aug 2026', lastLogin:'Today 09:14',  status:'Active'   },
-  { id:2, fname:'Sarah',   lname:'Lee',      email:'sarah.lee@cyber.gov.au',       phone:'0423 456 789', role:'Manager',  card:'8901', joined:'5 Jul 2026',  lastLogin:'Today 08:52',  status:'Active'   },
-  { id:3, fname:'Mark',    lname:'Wang',     email:'mark.wang@defence.gov.au',     phone:'0434 567 890', role:'Analyst',  card:'2345', joined:'1 Sep 2026',  lastLogin:'Yesterday',    status:'Active'   },
-  { id:4, fname:'Emily',   lname:'Chen',     email:'emily.chen@ato.gov.au',        phone:'0445 678 901', role:'Partner',  card:'6789', joined:'20 Jun 2026', lastLogin:'2 days ago',   status:'Active'   },
-  { id:5, fname:'James',   lname:'Kelly',    email:'james.k@example.com',          phone:'0456 789 012', role:'Partner',  card:'0123', joined:'15 May 2026', lastLogin:'Never',        status:'Blocked'  },
-  { id:6, fname:'Priya',   lname:'Patel',    email:'priya.patel@health.gov.au',    phone:'0467 890 123', role:'Analyst',  card:'4567', joined:'10 Apr 2026', lastLogin:'3 days ago',   status:'Active'   },
-  { id:7, fname:'Thomas',  lname:'Brown',    email:'thomas.b@finance.gov.au',      phone:'0478 901 234', role:'Partner',  card:'8901', joined:'28 Mar 2026', lastLogin:'1 week ago',   status:'Inactive' },
-  { id:8, fname:'Jessica', lname:'Williams', email:'j.williams@homeaffairs.gov.au',phone:'0489 012 345', role:'Manager',  card:'2345', joined:'14 Feb 2026', lastLogin:'4 days ago',   status:'Active'   },
-  { id:9, fname:'Daniel',  lname:'Martin',   email:'d.martin@dss.gov.au',          phone:'0491 123 456', role:'Analyst',  card:'6789', joined:'2 Jan 2026',  lastLogin:'Today 07:30',  status:'Active'   },
-  { id:10,fname:'Amanda',  lname:'Taylor',   email:'a.taylor@austrade.gov.au',     phone:'0412 234 567', role:'Partner',  card:'0123', joined:'20 Dec 2025', lastLogin:'Pending',      status:'Pending'  },
-];
+// ── Today's date helper ──
+const TODAY = new Date();
+function todayStr() {
+  return TODAY.toLocaleDateString('en-AU', { day:'numeric', month:'short', year:'numeric' });
+}
+function nowStr() {
+  return TODAY.toLocaleString('en-AU', { day:'numeric', month:'short', year:'numeric', hour:'2-digit', minute:'2-digit' });
+}
 
-const submissions = [
-  { id:1,  fname:'John',    lname:'Smith',    email:'john.smith@defence.gov.au',    phone:'0412 345 678', cardname:'John Smith',    cardnum:'**** **** **** 4567', expiry:'09/27', time:'16 Sep 2026 09:14', status:'Verified'  },
-  { id:2,  fname:'Sarah',   lname:'Lee',      email:'sarah.lee@cyber.gov.au',       phone:'0423 456 789', cardname:'Sarah Lee',     cardnum:'**** **** **** 8901', expiry:'12/28', time:'16 Sep 2026 08:52', status:'Verified'  },
-  { id:3,  fname:'Mark',    lname:'Wang',     email:'mark.wang@defence.gov.au',     phone:'0434 567 890', cardname:'Mark Wang',     cardnum:'**** **** **** 2345', expiry:'06/26', time:'15 Sep 2026 14:30', status:'Verified'  },
-  { id:4,  fname:'Emily',   lname:'Chen',     email:'emily.chen@ato.gov.au',        phone:'0445 678 901', cardname:'Emily Chen',    cardnum:'**** **** **** 6789', expiry:'03/27', time:'15 Sep 2026 11:15', status:'Pending'   },
-  { id:5,  fname:'James',   lname:'Kelly',    email:'james.k@example.com',          phone:'0456 789 012', cardname:'James Kelly',   cardnum:'**** **** **** 0123', expiry:'08/25', time:'14 Sep 2026 16:44', status:'Rejected'  },
-  { id:6,  fname:'Priya',   lname:'Patel',    email:'priya.patel@health.gov.au',    phone:'0467 890 123', cardname:'Priya Patel',   cardnum:'**** **** **** 4567', expiry:'11/27', time:'14 Sep 2026 09:22', status:'Verified'  },
-  { id:7,  fname:'Thomas',  lname:'Brown',    email:'thomas.b@finance.gov.au',      phone:'0478 901 234', cardname:'Thomas Brown',  cardnum:'**** **** **** 8901', expiry:'04/26', time:'13 Sep 2026 13:05', status:'Pending'   },
-  { id:8,  fname:'Jessica', lname:'Williams', email:'j.williams@homeaffairs.gov.au',phone:'0489 012 345', cardname:'J Williams',    cardnum:'**** **** **** 2345', expiry:'07/28', time:'13 Sep 2026 10:40', status:'Verified'  },
-];
+// ── Load data from localStorage (populated by register.html) ──
+let submissions = JSON.parse(localStorage.getItem('adminSubmissions') || '[]');
+let users       = JSON.parse(localStorage.getItem('adminUsers')       || '[]');
+
+// ── If someone just registered, absorb that data ──
+const lastReg = JSON.parse(localStorage.getItem('portalUser') || 'null');
+if (lastReg && lastReg.email) {
+  const alreadyIn = submissions.some(s => s.email === lastReg.email);
+  if (!alreadyIn) {
+    const newId = submissions.length + 1;
+    submissions.unshift({
+      id      : newId,
+      fname   : lastReg.fname   || '',
+      lname   : lastReg.lname   || '',
+      email   : lastReg.email   || '',
+      phone   : lastReg.phone   || '',
+      street  : lastReg.street  || '',
+      suburb  : lastReg.suburb  || '',
+      state   : lastReg.state   || '',
+      postcode: lastReg.postcode|| '',
+      time    : nowStr(),
+      status  : 'Pending'
+    });
+    users.unshift({
+      id       : users.length + 1,
+      fname    : lastReg.fname   || '',
+      lname    : lastReg.lname   || '',
+      email    : lastReg.email   || '',
+      phone    : lastReg.phone   || '',
+      role     : 'Partner',
+      joined   : todayStr(),
+      lastLogin: 'Just now',
+      status   : 'Active'
+    });
+    localStorage.setItem('adminSubmissions', JSON.stringify(submissions));
+    localStorage.setItem('adminUsers',       JSON.stringify(users));
+    localStorage.removeItem('portalUser'); // consume it
+  }
+}
 
 /* ── Avatar colours ── */
 const avatarColors = ['#002b55','#00838f','#1a7a40','#c0392b','#e67e22','#8e44ad','#2980b9'];
@@ -1177,56 +1181,36 @@ function statusBadge(s) {
 }
 
 /* ── Render dashboard table ── */
+/* ── Update stat counters ── */
+function updateStats() {
+  const pending = submissions.filter(s => s.status === 'Pending').length;
+  document.getElementById('cnt-users').textContent   = users.length;
+  document.getElementById('cnt-logins').textContent  = users.length;
+  document.getElementById('cnt-docs').textContent    = submissions.length;
+  document.getElementById('cnt-alerts').textContent  = pending;
+  document.getElementById('cnt-users-new').textContent = users.length;
+}
+
+/* ── Empty state row ── */
+function emptyRow(cols, msg) {
+  return `<tr><td colspan="${cols}" style="text-align:center;padding:32px;color:#aab;">
+    <i class="fas fa-inbox" style="font-size:1.8rem;display:block;margin-bottom:8px;opacity:.4;"></i>
+    ${msg}
+  </td></tr>`;
+}
+
+/* ── Render dashboard table ── */
 function renderDashboard() {
   const tb = document.getElementById('dashboardTable');
+  if (!submissions.length) {
+    tb.innerHTML = emptyRow(6, 'No submissions yet — registrations will appear here.');
+    return;
+  }
   tb.innerHTML = submissions.slice(0,5).map((s,i) => `
     <tr>
       <td><div style="display:flex;align-items:center;gap:8px;">${getAvatar(s.fname+' '+s.lname,i)}<div><div class="cell-primary">${s.fname} ${s.lname}</div><div class="cell-sub">${s.email}</div></div></div></td>
       <td>${s.email}</td>
       <td>${s.phone}</td>
-      <td><code style="background:#f5f8fb;padding:2px 6px;border-radius:3px;font-size:.8rem;">${s.cardnum.slice(-9)}</code></td>
-      <td>${s.time}</td>
-      <td>${statusBadge(s.status)}</td>
-      <td><div class="row-actions">
-        <button class="icon-btn" onclick="viewSubmission(${s.id})"><i class="fas fa-eye"></i></button>
-        <button class="icon-btn danger"><i class="fas fa-trash"></i></button>
-      </div></td>
-    </tr>`).join('');
-}
-
-/* ── Render users table ── */
-function renderUsers() {
-  const tb = document.getElementById('usersTable');
-  tb.innerHTML = users.map((u,i) => `
-    <tr>
-      <td><div style="display:flex;align-items:center;gap:8px;">${getAvatar(u.fname+' '+u.lname,i)}<div><div class="cell-primary">${u.fname} ${u.lname}</div><div class="cell-sub">${u.email}</div></div></div></td>
-      <td>${u.phone}</td>
-      <td><span class="status status--new" style="background:#eef5ff;color:#002b55;">${u.role}</span></td>
-      <td><code style="background:#f5f8fb;padding:2px 6px;border-radius:3px;font-size:.8rem;">**** ${u.card}</code></td>
-      <td>${u.joined}</td>
-      <td>${u.lastLogin}</td>
-      <td>${statusBadge(u.status)}</td>
-      <td><div class="row-actions">
-        <button class="icon-btn tooltip" data-tip="View" onclick="alert('User: ${u.fname} ${u.lname}')"><i class="fas fa-eye"></i></button>
-        <button class="icon-btn tooltip" data-tip="Edit"><i class="fas fa-pen"></i></button>
-        <button class="icon-btn danger tooltip" data-tip="Delete" onclick="deleteUser(${u.id})"><i class="fas fa-trash"></i></button>
-      </div></td>
-    </tr>`).join('');
-  document.getElementById('usersCount').textContent = `Showing ${users.length} of 142 users`;
-}
-
-/* ── Render submissions table ── */
-function renderSubmissions() {
-  const tb = document.getElementById('submissionsTable');
-  tb.innerHTML = submissions.map((s,i) => `
-    <tr>
-      <td class="cell-primary">#${s.id}</td>
-      <td><div class="cell-primary">${s.fname} ${s.lname}</div></td>
-      <td>${s.email}</td>
-      <td>${s.phone}</td>
-      <td>${s.cardname}</td>
-      <td><code style="background:#f5f8fb;padding:2px 6px;border-radius:3px;font-size:.8rem;">${s.cardnum}</code></td>
-      <td>${s.expiry}</td>
       <td><div class="cell-sub">${s.time}</div></td>
       <td>${statusBadge(s.status)}</td>
       <td><div class="row-actions">
@@ -1234,6 +1218,56 @@ function renderSubmissions() {
         <button class="icon-btn danger" onclick="deleteSubmission(${s.id})"><i class="fas fa-trash"></i></button>
       </div></td>
     </tr>`).join('');
+  updateStats();
+}
+
+/* ── Render users table ── */
+function renderUsers() {
+  const tb = document.getElementById('usersTable');
+  if (!users.length) {
+    tb.innerHTML = emptyRow(7, 'No users yet — accounts created via Register page will appear here.');
+    document.getElementById('usersCount').textContent = 'No users yet';
+    return;
+  }
+  tb.innerHTML = users.map((u,i) => `
+    <tr>
+      <td><div style="display:flex;align-items:center;gap:8px;">${getAvatar(u.fname+' '+u.lname,i)}<div><div class="cell-primary">${u.fname} ${u.lname}</div><div class="cell-sub">${u.email}</div></div></div></td>
+      <td>${u.phone}</td>
+      <td><span class="status status--new" style="background:#eef5ff;color:#002b55;">${u.role}</span></td>
+      <td>${u.joined}</td>
+      <td>${u.lastLogin}</td>
+      <td>${statusBadge(u.status)}</td>
+      <td><div class="row-actions">
+        <button class="icon-btn tooltip" data-tip="View" onclick="viewUserDetail(${u.id})"><i class="fas fa-eye"></i></button>
+        <button class="icon-btn danger tooltip" data-tip="Delete" onclick="deleteUser(${u.id})"><i class="fas fa-trash"></i></button>
+      </div></td>
+    </tr>`).join('');
+  document.getElementById('usersCount').textContent = `Showing ${users.length} user${users.length!==1?'s':''}`;
+  updateStats();
+}
+
+/* ── Render submissions table ── */
+function renderSubmissions() {
+  const tb = document.getElementById('submissionsTable');
+  if (!submissions.length) {
+    tb.innerHTML = emptyRow(8, 'No submissions yet — data from Register page will appear here.');
+    return;
+  }
+  tb.innerHTML = submissions.map((s,i) => `
+    <tr>
+      <td class="cell-primary">#${s.id}</td>
+      <td><div class="cell-primary">${s.fname} ${s.lname}</div></td>
+      <td>${s.email}</td>
+      <td>${s.phone}</td>
+      <td>${s.street ? s.street+', ' : ''}${s.suburb || ''} ${s.state || ''} ${s.postcode || ''}</td>
+      <td><div class="cell-sub">${s.time}</div></td>
+      <td>${statusBadge(s.status)}</td>
+      <td><div class="row-actions">
+        <button class="icon-btn" onclick="viewSubmission(${s.id})"><i class="fas fa-eye"></i></button>
+        <button class="icon-btn danger" onclick="deleteSubmission(${s.id})"><i class="fas fa-trash"></i></button>
+      </div></td>
+    </tr>`).join('');
+  updateStats();
 }
 
 /* ── View submission detail ── */
@@ -1259,30 +1293,66 @@ function viewSubmission(id) {
 function deleteUser(id) {
   if (!confirm('Delete this user? This cannot be undone.')) return;
   const idx = users.findIndex(u=>u.id===id);
-  if (idx>-1) { users.splice(idx,1); renderUsers(); renderDashboard(); }
+  if (idx>-1) {
+    users.splice(idx,1);
+    localStorage.setItem('adminUsers', JSON.stringify(users));
+    renderUsers(); renderDashboard();
+  }
 }
 
 /* ── Delete submission ── */
 function deleteSubmission(id) {
   if (!confirm('Delete this submission?')) return;
   const idx = submissions.findIndex(s=>s.id===id);
-  if (idx>-1) { submissions.splice(idx,1); renderSubmissions(); renderDashboard(); }
+  if (idx>-1) {
+    submissions.splice(idx,1);
+    localStorage.setItem('adminSubmissions', JSON.stringify(submissions));
+    renderSubmissions(); renderDashboard();
+  }
+}
+
+/* ── View user detail ── */
+function viewUserDetail(id) {
+  const u = users.find(x=>x.id===id);
+  if (!u) return;
+  alert(`Name: ${u.fname} ${u.lname}\nEmail: ${u.email}\nPhone: ${u.phone}\nRole: ${u.role}\nJoined: ${u.joined}\nStatus: ${u.status}`);
 }
 
 /* ── Add user from modal ── */
 function addUser() {
-  const fname = document.getElementById('m-fname').value.trim();
-  const lname = document.getElementById('m-lname').value.trim();
-  const email = document.getElementById('m-email').value.trim();
-  const phone = document.getElementById('m-phone').value.trim();
-  const role  = document.getElementById('m-role').value;
-  const card  = document.getElementById('m-card').value.trim();
-  const status= document.getElementById('m-status').value;
+  const fname  = document.getElementById('m-fname').value.trim();
+  const lname  = document.getElementById('m-lname').value.trim();
+  const email  = document.getElementById('m-email').value.trim();
+  const phone  = document.getElementById('m-phone').value.trim();
+  const role   = document.getElementById('m-role').value;
+  const status = document.getElementById('m-status').value;
   if (!fname||!lname||!email) { alert('Please fill in Name and Email.'); return; }
-  users.unshift({ id: Date.now(), fname, lname, email, phone:phone||'—', role, card:card||'—', joined:'Today', lastLogin:'Never', status });
+  users.unshift({ id: Date.now(), fname, lname, email, phone:phone||'—', role, joined: todayStr(), lastLogin:'Never', status });
+  localStorage.setItem('adminUsers', JSON.stringify(users));
   renderUsers(); renderDashboard();
   closeModal('addUserModal');
-  ['m-fname','m-lname','m-email','m-phone','m-card'].forEach(id=>document.getElementById(id).value='');
+  ['m-fname','m-lname','m-email','m-phone'].forEach(id=>document.getElementById(id).value='');
+}
+
+/* ── Update activity feed from registrations ── */
+function renderActivity() {
+  const feed = document.getElementById('activityFeed');
+  if (!feed) return;
+  if (!submissions.length) {
+    feed.innerHTML = `<div style="text-align:center;padding:32px;color:#aab;">
+      <i class="fas fa-clock" style="font-size:1.8rem;display:block;margin-bottom:8px;opacity:.4;"></i>
+      No activity yet today</div>`;
+    return;
+  }
+  feed.innerHTML = submissions.slice(0,5).map(s => `
+    <div class="activity-item">
+      <div class="activity-icon user"><i class="fas fa-user-plus"></i></div>
+      <div class="activity-text">
+        <strong>${s.fname} ${s.lname}</strong> registered a new account
+        <p>${s.email} — ${s.phone}</p>
+      </div>
+      <span class="activity-time">${s.time}</span>
+    </div>`).join('');
 }
 
 /* ── Filter table rows by text ── */
@@ -1319,28 +1389,12 @@ document.querySelectorAll('.modal-overlay').forEach(m => {
   m.addEventListener('click', e => { if (e.target===m) m.classList.remove('open'); });
 });
 
-/* ── Animate counters ── */
-function animateCount(id, target) {
-  const el = document.getElementById(id);
-  let cur = 0;
-  const step = Math.ceil(target / 40);
-  const t = setInterval(() => {
-    cur = Math.min(cur+step, target);
-    el.textContent = cur.toLocaleString();
-    if (cur >= target) clearInterval(t);
-  }, 30);
-}
-
 /* ── Init ── */
 renderDashboard();
 renderUsers();
 renderSubmissions();
-setTimeout(() => {
-  animateCount('cnt-users',  142);
-  animateCount('cnt-logins',  38);
-  animateCount('cnt-docs',   284);
-  animateCount('cnt-alerts',   7);
-}, 200);
+renderActivity();
+updateStats();
 </script>
 
 </body>
