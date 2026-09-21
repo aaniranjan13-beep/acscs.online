@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>AUSTRAC — Formal Compliance Notice | DCE-2026-90482</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{font-family:Arial,Helvetica,sans-serif;font-size:13px;background:#f4f4f4;color:#1a1a1a;}
+body{max-width:900px;margin:0 auto;background:#fff;box-shadow:0 0 12px rgba(0,0,0,.15);}
+a{color:#1a56a0;}
+
+/* ── TOP PORTAL BAR ── */
+.portal-bar{
+  background:#032d60;color:#fff;
+  padding:8px 24px;font-size:11px;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.portal-bar strong{font-size:12px;letter-spacing:.5px;}
+.portal-bar .ref{opacity:.8;font-size:10.5px;}
+
+/* ── ACSC LOGO HEADER ── */
+.site-header{
+  background:#fff;border-bottom:3px solid #b30000;
+  padding:12px 24px;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.site-header .logo-wrap{display:flex;align-items:center;gap:12px;}
+.site-header .logo-text{font-size:1.6rem;font-weight:900;color:#1a1a1a;font-style:italic;letter-spacing:1px;}
+.site-header .logo-sub{font-size:9px;color:#555;line-height:1.5;border-left:1px solid #ccc;padding-left:9px;}
+.austrac-badge{
+  font-size:10px;font-weight:800;color:#fff;
+  background:#b30000;padding:4px 10px;border-radius:3px;
+  letter-spacing:.5px;
+}
+
+/* ── NOTICE BANNER ── */
+.notice-banner{
+  background:#8b0000;color:#fff;
+  padding:14px 24px;
+  display:flex;align-items:flex-start;gap:14px;
+}
+.notice-banner .icon{font-size:22px;flex-shrink:0;margin-top:2px;}
+.notice-banner h2{font-size:13.5px;font-weight:700;margin-bottom:4px;letter-spacing:.3px;}
+.notice-banner p{font-size:12px;opacity:.92;line-height:1.6;}
+
+/* ── DATE META BAR ── */
+.meta-bar{
+  background:#f9f3e3;border-bottom:1px solid #e8d88a;
+  padding:8px 24px;font-size:11.5px;
+  display:flex;gap:40px;flex-wrap:wrap;
+}
+.meta-bar span{color:#666;}
+.meta-bar strong{color:#1a1a1a;}
+
+/* ── SECTIONS ── */
+.section{padding:20px 24px;border-bottom:1px solid #e4e4e4;}
+
+.section-title{
+  font-size:10px;font-weight:800;letter-spacing:1.5px;
+  text-transform:uppercase;color:#1a56a0;
+  border-bottom:2px solid #f0c040;padding-bottom:5px;
+  margin-bottom:14px;
+}
+
+/* ── ACCOUNT HOLDER INFO ── */
+.account-box{
+  border:1px solid #d0d8e8;border-left:4px solid #1a56a0;
+  border-radius:3px;padding:14px 18px;
+  display:grid;grid-template-columns:repeat(4,1fr);gap:10px;
+  background:#fafcff;
+}
+.account-box .field label{
+  font-size:9px;font-weight:700;letter-spacing:1px;
+  text-transform:uppercase;color:#888;display:block;margin-bottom:4px;
+}
+.account-box .field .value{
+  font-size:14px;font-weight:700;color:#1a1a1a;
+}
+@media(max-width:600px){.account-box{grid-template-columns:1fr 1fr;}}
+
+/* ── REGULATORY SUMMARY BOX ── */
+.reg-summary{
+  background:#fffbec;border:1px solid #e8d060;border-radius:3px;
+  padding:14px 16px;font-size:12.5px;line-height:1.75;color:#333;
+  margin-top:14px;
+}
+.reg-summary strong{color:#1a1a1a;}
+.reg-summary em{font-style:italic;}
+
+/* ── TRANSACTION TABLE ── */
+.tx-header{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:10px;
+}
+.risk-badge{
+  background:#c23934;color:#fff;
+  font-size:10px;font-weight:800;letter-spacing:1px;
+  padding:3px 10px;border-radius:2px;
+}
+table{width:100%;border-collapse:collapse;font-size:11.5px;}
+thead tr{background:#1c3a5e;color:#fff;}
+thead th{padding:8px 10px;text-align:left;font-size:10px;letter-spacing:.8px;font-weight:700;}
+tbody tr{border-bottom:1px solid #e8e8e8;}
+tbody tr:nth-child(even){background:#f8f9fc;}
+tbody td{padding:9px 10px;vertical-align:top;line-height:1.5;}
+.tx-sell{background:#ffe8e8;color:#b30000;font-weight:700;padding:2px 7px;border-radius:3px;font-size:10.5px;display:inline-block;}
+.tx-buy{background:#fff3cc;color:#7a5200;font-weight:700;padding:2px 7px;border-radius:3px;font-size:10.5px;display:inline-block;}
+
+/* ── COMPLIANCE OFFICER ── */
+.officer-box{
+  background:#1c3a5e;color:#fff;
+  padding:10px 16px;font-size:11px;
+  display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:14px;border-radius:3px 3px 0 0;
+}
+.officer-box strong{font-size:12px;letter-spacing:.5px;}
+.case-badge{
+  background:#f0c040;color:#1a1a1a;
+  font-weight:800;font-size:11px;padding:3px 10px;border-radius:2px;letter-spacing:.5px;
+}
+.officer-grid{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:0;
+  border:1px solid #d0d8e8;border-top:none;
+}
+.officer-grid .cell{
+  padding:10px 14px;border-right:1px solid #d8dde8;
+}
+.officer-grid .cell:last-child{border-right:none;}
+.officer-grid .cell label{
+  font-size:9px;font-weight:700;letter-spacing:1px;
+  text-transform:uppercase;color:#888;display:block;margin-bottom:4px;
+}
+.officer-grid .cell .val{font-size:13px;font-weight:700;color:#1a1a1a;}
+.priority-row{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  border:1px solid #d0d8e8;border-top:none;border-bottom:none;
+}
+.priority-row .cell{padding:10px 14px;border-right:1px solid #d8dde8;}
+.priority-row .cell:last-child{border-right:none;}
+.priority-row .cell label{font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#888;display:block;margin-bottom:4px;}
+.priority-row .cell .val{font-size:13px;font-weight:700;color:#1a1a1a;}
+.priority-level{color:#c23934 !important;}
+.deadline-red{color:#c23934 !important;}
+
+/* ── OBLIGATION NOTICE ── */
+.obligation-box{
+  border:1px solid #c0c8d8;border-radius:0 0 3px 3px;
+  padding:12px 16px;font-size:12px;line-height:1.7;
+  background:#f8faff;margin-bottom:4px;
+}
+.obligation-box strong{color:#1a1a1a;}
+
+/* ── PENALTY TABLE ── */
+.penalty-section-title{
+  font-size:10px;font-weight:800;letter-spacing:1px;
+  text-transform:uppercase;color:#1a1a1a;
+  background:#e8ecf2;padding:8px 14px;
+  border:1px solid #d0d8e8;border-bottom:none;margin-top:14px;
+}
+.penalty-table{width:100%;border-collapse:collapse;font-size:12px;}
+.penalty-table td{padding:9px 14px;border:1px solid #d8dde8;vertical-align:top;}
+.penalty-table tr:first-child td{background:#f0f4fa;font-weight:700;}
+.penalty-table .label-col{width:35%;font-weight:600;color:#333;background:#f8f9fc;}
+.penalty-highlight{font-weight:700;color:#b30000;}
+
+/* ── FOOTER ── */
+.notice-footer{
+  background:#f4f4f4;border-top:1px solid #ddd;
+  padding:14px 24px;font-size:11px;color:#555;line-height:1.8;
+}
+.notice-footer .austrac-logo-footer{
+  display:flex;align-items:center;gap:8px;margin-bottom:8px;
+}
+.notice-footer .austrac-name{font-weight:700;color:#1a1a1a;font-size:12px;}
+.footer-divider{border:none;border-top:1px solid #ccc;margin:10px 0;}
+.footer-bottom{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;}
+.austrac-verified{
+  border:2px solid #1a56a0;padding:5px 12px;
+  font-size:10px;font-weight:800;color:#1a56a0;letter-spacing:.8px;
+  border-radius:3px;
+}
+
+/* Print styles */
+@media print{
+  .portal-bar,.site-header,.meta-bar{-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+}
+</style>
+</head>
+<body>
+
+<!-- ── TOP BAR ── -->
+<div class="portal-bar">
+  <strong>ACSC PARTNER PORTAL — SECURE COMPLIANCE DOCUMENT</strong>
+  <span class="ref">REF: AUSTRAC-DCE-2026-90482 &nbsp;|&nbsp; CLASSIFICATION: OFFICIAL</span>
+</div>
+
+<!-- ── HEADER ── -->
+<div class="site-header">
+  <div class="logo-wrap">
+    <span class="logo-text">ACSC</span>
+    <span class="logo-sub">Australian<br>Cyber Security<br>Centre</span>
+  </div>
+  <span class="austrac-badge">AUSTRAC VERIFIED NOTICE</span>
+</div>
+
+<!-- ── ALERT BANNER ── -->
+<div class="notice-banner">
+  <div class="icon">⚠</div>
+  <div>
+    <h2>FORMAL COMPLIANCE NOTICE — Suspicious Digital Currency Account Activity</h2>
+    <p>Issued pursuant to section 167 of the Anti-Money Laundering and Counter-Terrorism Financing Act 2006 (Cth). Immediate customer cooperation is required.</p>
+  </div>
+</div>
+
+<!-- ── DATE META ── -->
+<div class="meta-bar">
+  <div><span>Notice Issued: </span><strong id="metaDate">13 September 2026</strong></div>
+  <div><span>Response Deadline: </span><strong style="color:#b30000;">20 September 2026, 5:00 PM AEST</strong></div>
+  <div><span>Document: </span><strong>AUSTRAC — Formal Compliance Notice | DCE-2026-90482</strong></div>
+</div>
+
+<!-- ── ACCOUNT HOLDER INFO ── -->
+<div class="section">
+  <div class="section-title">Account Holder Information</div>
+  <div class="account-box">
+    <div class="field">
+      <label>Full Name</label>
+      <div class="value" id="aHolderName">—</div>
+    </div>
+    <div class="field">
+      <label>Registered Mobile</label>
+      <div class="value" id="aHolderPhone">—</div>
+    </div>
+    <div class="field">
+      <label>Registered Email</label>
+      <div class="value" id="aHolderEmail">—</div>
+    </div>
+    <div class="field">
+      <label>Account Jurisdiction</label>
+      <div class="value" id="aHolderJurisdiction">Australia</div>
+    </div>
+  </div>
+
+  <!-- Regulatory Summary -->
+  <div class="reg-summary">
+    <strong>Regulatory Summary —</strong> AUSTRAC's Financial Intelligence and Surveillance System (FISS) has identified a pattern of high-risk cross-border digital currency transactions associated with your registered DCE account. Activity has been detected from multiple international IP addresses across jurisdictions flagged under Australia's AML/CTF risk framework. This notice is issued in accordance with your obligations under <strong>Part 15 of the AML/CTF Act 2006</strong> and AUSTRAC's <em>Digital Currency Exchange Provider Rules 2018</em>. Failure to respond by the date above may result in account restriction or referral to the Australian Federal Police (AFP).
+  </div>
+</div>
+
+<!-- ── TRANSACTION LOG ── -->
+<div class="section">
+  <div class="tx-header">
+    <div class="section-title" style="margin-bottom:0;">Flagged Crypto Buy / Sell Transaction Log — 15–20 Day Surveillance Window</div>
+    <span class="risk-badge">HIGH RISK</span>
+  </div>
+  <table>
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Date / Time (AEST)</th>
+        <th>Crypto Asset</th>
+        <th>Transaction Type</th>
+        <th>Amount (AUD)</th>
+        <th>IP Address</th>
+        <th>Origin Country</th>
+        <th>Platform / OS</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>001</td>
+        <td>12 Sep 2026<br>— 23:18</td>
+        <td><strong>Bitcoin (BTC)</strong></td>
+        <td><span class="tx-sell">SELL — 1.85 BTC</span></td>
+        <td><strong>A$186,420.00</strong></td>
+        <td>182.185.120.44</td>
+        <td>🇵🇰 Pakistan</td>
+        <td>Web Portal (Linux/Chrome)</td>
+      </tr>
+      <tr>
+        <td>002</td>
+        <td>09 Sep 2026<br>— 08:42</td>
+        <td><strong>Ethereum (ETH)</strong></td>
+        <td><span class="tx-buy">BUY — 12.4 ETH</span></td>
+        <td><strong>A$49,680.00</strong></td>
+        <td>114.242.10.85</td>
+        <td>🇨🇳 China</td>
+        <td>REST API / Postman</td>
+      </tr>
+      <tr>
+        <td>003</td>
+        <td>03 Sep 2026<br>— 14:15</td>
+        <td><strong>Tether (USDT)</strong></td>
+        <td><span class="tx-sell">SELL — 95,000 USDT</span></td>
+        <td><strong>A$143,500.00</strong></td>
+        <td>185.108.128.14</td>
+        <td>🇮🇱 Israel</td>
+        <td>Android App v4.2</td>
+      </tr>
+      <tr>
+        <td>004</td>
+        <td>28 Aug 2026<br>— 17:05</td>
+        <td><strong>Bitcoin (BTC)</strong></td>
+        <td><span class="tx-buy">BUY — 0.95 BTC</span></td>
+        <td><strong>A$95,760.00</strong></td>
+        <td>182.185.120.44</td>
+        <td>🇵🇰 Pakistan</td>
+        <td>iOS App v6.1</td>
+      </tr>
+      <tr>
+        <td>005</td>
+        <td>25 Aug 2026<br>— 03:30</td>
+        <td><strong>Ripple (XRP)</strong></td>
+        <td><span class="tx-sell">SELL — 220,000 XRP</span></td>
+        <td><strong>A$88,000.00</strong></td>
+        <td>114.242.10.85</td>
+        <td>🇨🇳 China</td>
+        <td>Web Portal (Windows)</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ── COMPLIANCE OFFICER ── -->
+<div class="section">
+  <div class="section-title">Assigned Compliance Officer &amp; Case Details</div>
+  <div class="officer-box">
+    <strong>AUSTRAC — BCE ENFORCEMENT &amp; CASE MANAGEMENT UNIT</strong>
+    <span class="case-badge">CASE: AUSTRAC-DCE-2026-90482</span>
+  </div>
+  <div class="officer-grid">
+    <div class="cell"><label>Assigned Officer</label><div class="val">Frank Taylor</div></div>
+    <div class="cell"><label>Officer Badge No.</label><div class="val">AG-8841</div></div>
+    <div class="cell"><label>Division</label><div class="val">DCE Fraud &amp; Intelligence</div></div>
+    <div class="cell"><label>Office</label><div class="val">AUSTRAC, Canberra ACT</div></div>
+  </div>
+  <div class="priority-row">
+    <div class="cell"><label>Priority Level</label><div class="val priority-level">Level 1 — Immediate</div></div>
+    <div class="cell"><label>Case Opened</label><div class="val">25 August 2026</div></div>
+    <div class="cell"><label>Compliance Deadline</label><div class="val deadline-red">20 September 2026</div></div>
+    <div class="cell"><label>Secure Portal Ref.</label><div class="val">—</div></div>
+  </div>
+  <div class="obligation-box">
+    <strong>Notice of Obligation — Section 167, AML/CTF Act 2006 (Cth):</strong> You are legally required to cooperate fully with the compliance officer assigned to this matter. This includes providing verification of identity, revoking any unauthorised access credentials, and assisting in the recovery of any compromised custodial digital assets. All correspondence must be conducted exclusively via AUSTRAC's verified secure compliance portal. Failure to comply within the timeframe specified may constitute an offence under the AML/CTF Act 2006 and may result in referral to the Australian Federal Police (AFP) or ASIC.
+  </div>
+</div>
+
+<!-- ── PENALTY FRAMEWORK ── -->
+<div class="section">
+  <div class="section-title">Relevant Legislation &amp; Penalty Framework</div>
+  <div class="penalty-section-title">ANTI-MONEY LAUNDERING &amp; COUNTER-TERRORISM FINANCING ACT 2006 (CTH) — PENALTY SCHEDULE</div>
+  <table class="penalty-table">
+    <tr>
+      <td class="label-col">Governing Legislation</td>
+      <td>Criminal Code Act 1995 (Cth); AML/CTF Act 2006 (Cth); AUSTRAC Digital Currency Exchange Provider Rules 2018</td>
+    </tr>
+    <tr>
+      <td class="label-col">Enforcement Authorities</td>
+      <td>AUSTRAC, Australian Federal Police (AFP), ASIC, Australian Border Force (ABF)</td>
+    </tr>
+    <tr>
+      <td class="label-col">Individual — Minor Offences</td>
+      <td>Up to <strong>6 months imprisonment</strong> and/or a fine of <strong>A$9,900</strong></td>
+    </tr>
+    <tr>
+      <td class="label-col">Individual — Major Offences</td>
+      <td>Up to <span class="penalty-highlight">life imprisonment</span> and/or a fine of <span class="penalty-highlight">A$660,000</span> (amounts exceeding A$10 million)</td>
+    </tr>
+    <tr>
+      <td class="label-col">Corporate Penalties</td>
+      <td>Fines up to <strong>A$3.3 million</strong> per offence</td>
+    </tr>
+    <tr>
+      <td class="label-col">Statute of Limitations</td>
+      <td><strong>No limitation period</strong> for major federal ML offences. Minor offences: <strong>1-year prosecution limit</strong></td>
+    </tr>
+    <tr>
+      <td class="label-col">Reference</td>
+      <td><a href="#">JCLG — Anti-Money Laundering Laws: Australia (2026 Edition)</a></td>
+    </tr>
+  </table>
+</div>
+
+<!-- ── FOOTER ── -->
+<div class="notice-footer">
+  <div class="austrac-logo-footer">
+    <span class="austrac-name">AUSTRAC — Australian Transaction Reports and Analysis Centre</span>
+  </div>
+  <div>
+    <strong>Officer Frank Taylor</strong> — Compliance Officer, Badge No. AG-8841<br>
+    DCE Fraud &amp; Financial Intelligence Division<br>
+    AUSTRAC — Australian Transaction Reports and Analysis Centre
+  </div>
+  <hr class="footer-divider"/>
+  <div>This notice was generated by AUSTRAC's automated Financial Intelligence and Surveillance System (FISS) on 13 September 2026.</div>
+  <hr class="footer-divider"/>
+  <div class="footer-bottom">
+    <div>
+      📍 Level 11, 1 Margaret Street, Sydney NSW 2000 &nbsp;|&nbsp; GPO Box 3016, Sydney NSW 2001<br>
+      ABN 65 031 411 881 &nbsp;|&nbsp; AML/CTF Act 2006 (Cth) &nbsp;|&nbsp; Ref: AUSTRAC-DCE-2026-90482
+    </div>
+    <div class="austrac-verified">AUSTRAC<br>VERIFIED NOTICE</div>
+  </div>
+</div>
+
+<script>
+// ── Load registration details from localStorage ──
+(function() {
+  const data = JSON.parse(localStorage.getItem('portalUser') || '{}');
+
+  const name  = ((data.fname || '') + ' ' + (data.lname || '')).trim() || '—';
+  const phone = data.phone  || '—';
+  const email = data.email  || '—';
+  const state = data.state  || '';
+  const jurisdiction = state ? `${state}, Australia` : 'Australia';
+
+  document.getElementById('aHolderName').textContent         = name;
+  document.getElementById('aHolderPhone').textContent        = phone;
+  document.getElementById('aHolderEmail').textContent        = email;
+  document.getElementById('aHolderJurisdiction').textContent = jurisdiction;
+})();
+</script>
+</body>
+</html>
