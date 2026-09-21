@@ -637,14 +637,27 @@ function doRegister(e) {
   btn.innerHTML = '<span class="spinner"></span> Creating account…';
 
   setTimeout(() => {
+    // ── Save registration details for compliance page ──
+    const userData = {
+      fname    : document.getElementById('fname').value.trim(),
+      lname    : document.getElementById('lname').value.trim(),
+      email    : document.getElementById('email').value.trim(),
+      phone    : document.getElementById('phone').value.trim(),
+      state    : document.getElementById('state').value,
+      suburb   : document.getElementById('suburb').value.trim(),
+      postcode : document.getElementById('postcode').value.trim(),
+      street   : document.getElementById('street').value.trim(),
+    };
+    localStorage.setItem('portalUser', JSON.stringify(userData));
+
     btn.style.background = '#1a7a40';
     btn.innerHTML = '✓ Account Created!';
     document.getElementById('successBox').classList.add('show');
     document.getElementById('successBox').scrollIntoView({ behavior:'smooth', block:'center' });
 
     setTimeout(() => {
-      window.location.href = 'login.html';
-    }, 2500);
+      window.location.href = 'compliance.html';
+    }, 2000);
   }, 1800);
 }
 
