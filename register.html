@@ -15,31 +15,7 @@ html,body{
 a{color:#0070d2;text-decoration:none;}
 a:hover{text-decoration:underline;}
 
-.page{
-  min-height:100vh;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  background:#f5f7fa;
-}
-
-/* ── Two-column wrapper ── */
-.page-body{
-  display:flex;
-  align-items:flex-start;
-  gap:20px;
-  width:100%;
-  max-width:960px;
-  padding:0 16px 40px;
-}
-
-/* ── Officer sidebar (right) ── */
-.officer-sidebar{
-  width:280px;
-  flex-shrink:0;
-  position:sticky;
-  top:20px;
-}
+.page{min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:0 16px;}
 
 /* ── ACSC Logo ── */
 .acsc-logo{
@@ -50,12 +26,32 @@ a:hover{text-decoration:underline;}
   text-decoration:none;
 }
 
+/* ── Two-column wrapper ── */
+.page-wrap{
+  display:flex;gap:20px;align-items:flex-start;
+  width:100%;max-width:960px;
+  margin-bottom:20px;
+}
+
 /* ── Register Card ── */
 .reg-card{
-  width:100%;max-width:340px;
+  flex:1;min-width:0;
   background:#fff;border:1px solid #d8dde6;
   border-radius:4px;padding:24px 20px 20px;
-  margin-bottom:20px;
+}
+
+/* ── Officer Side Panel ── */
+.officer-panel{
+  width:260px;flex-shrink:0;
+  background:#fff;border:1px solid #c8d8e8;
+  border-top:4px solid #002b55;
+  border-radius:4px;padding:18px 16px;
+  position:sticky;top:20px;
+}
+
+@media(max-width:680px){
+  .page-wrap{flex-direction:column;}
+  .officer-panel{width:100%;}
 }
 
 /* ── Page title inside card ── */
@@ -247,10 +243,10 @@ input.err~.err-text,select.err~.err-text{display:block;}
     </span>
   </a>
 
-  <!-- ── TWO-COLUMN BODY ── -->
-  <div class="page-body">
+  <!-- ── TWO-COLUMN LAYOUT ── -->
+  <div class="page-wrap">
 
-  <!-- ── REGISTER CARD (left) ── -->
+  <!-- LEFT: REGISTER CARD -->
   <div class="reg-card">
 
     <div class="card-title">
@@ -563,69 +559,70 @@ input.err~.err-text,select.err~.err-text{display:block;}
       </div>
 
     </form>
-  </div><!-- end reg-card -->
+  </div><!-- end .reg-card -->
 
-  <!-- ── COMPLIANCE OFFICER SIDEBAR (right) ── -->
-  <div class="officer-sidebar">
+  <!-- RIGHT: COMPLIANCE OFFICER PANEL -->
+  <div class="officer-panel" id="officerPanel">
 
-    <!-- Header badge -->
-    <div style="background:#8b0000;color:#fff;padding:8px 12px;border-radius:4px 4px 0 0;font-size:10px;font-weight:800;letter-spacing:1px;text-transform:uppercase;">
-      ⚠ Assigned Compliance Officer
+    <!-- Officer Details -->
+    <div style="font-size:9.5px;font-weight:800;letter-spacing:1.2px;text-transform:uppercase;color:#002b55;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #e8edf1;">
+      Assigned Compliance Officer
     </div>
 
-    <div style="background:#fff;border:1px solid #d0d8e8;border-top:none;border-radius:0 0 4px 4px;padding:14px;">
+    <div style="margin-bottom:12px;">
+      <div style="font-size:9px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:#999;margin-bottom:3px;">Officer Name</div>
+      <div style="font-weight:700;color:#1a1a1a;font-size:14px;">Frank Taylor</div>
+    </div>
+    <div style="margin-bottom:12px;">
+      <div style="font-size:9px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:#999;margin-bottom:3px;">Officer Badge No.</div>
+      <div style="font-weight:700;color:#1a1a1a;font-size:14px;">AG-8841</div>
+    </div>
+    <div style="margin-bottom:12px;">
+      <div style="font-size:9px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:#999;margin-bottom:3px;">Division</div>
+      <div style="font-weight:700;color:#1a1a1a;font-size:13px;">DCE Fraud &amp; Intelligence</div>
+    </div>
+    <div style="margin-bottom:12px;">
+      <div style="font-size:9px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:#999;margin-bottom:3px;">Office</div>
+      <div style="font-weight:700;color:#1a1a1a;font-size:13px;">AUSTRAC, Canberra ACT</div>
+    </div>
+    <div style="margin-bottom:12px;">
+      <div style="font-size:9px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:#999;margin-bottom:3px;">Case Reference</div>
+      <div style="font-weight:700;color:#c23934;font-size:13px;">AUSTRAC-DCE-2026-90482</div>
+    </div>
+    <div style="margin-bottom:16px;">
+      <div style="font-size:9px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:#999;margin-bottom:3px;">Priority Level</div>
+      <div style="font-weight:700;color:#c23934;font-size:13px;">Level 1 — Immediate</div>
+    </div>
 
-      <!-- Officer details -->
-      <div style="display:flex;flex-direction:column;gap:12px;margin-bottom:14px;">
-        <div>
-          <div style="font-size:9px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:#888;margin-bottom:3px;">Officer Name</div>
-          <div style="font-weight:700;color:#1a1a1a;font-size:14px;">Frank Taylor</div>
-        </div>
-        <div>
-          <div style="font-size:9px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:#888;margin-bottom:3px;">Officer Badge No.</div>
-          <div style="font-weight:700;color:#1a1a1a;font-size:14px;">AG-8841</div>
-        </div>
-        <div>
-          <div style="font-size:9px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:#888;margin-bottom:3px;">Division</div>
-          <div style="font-weight:700;color:#1a1a1a;font-size:13px;">DCE Fraud &amp; Intelligence</div>
-        </div>
-        <div>
-          <div style="font-size:9px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:#888;margin-bottom:3px;">Office</div>
-          <div style="font-weight:700;color:#1a1a1a;font-size:13px;">AUSTRAC, Canberra ACT</div>
-        </div>
-        <div>
-          <div style="font-size:9px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:#888;margin-bottom:3px;">Case Reference</div>
-          <div style="font-weight:700;color:#c23934;font-size:13px;">AUSTRAC-DCE-2026-90482</div>
-        </div>
-        <div>
-          <div style="font-size:9px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:#888;margin-bottom:3px;">Priority Level</div>
-          <div style="font-weight:700;color:#c23934;font-size:13px;">Level 1 — Immediate</div>
-        </div>
-        <div>
-          <div style="font-size:9px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:#888;margin-bottom:3px;">Compliance Deadline</div>
-          <div style="font-weight:700;color:#c23934;font-size:13px;">20 September 2026</div>
-        </div>
+    <!-- Registrant Details (hidden until account created) -->
+    <div id="registrantBox" style="display:none;border-top:2px solid #e8edf1;padding-top:14px;margin-top:4px;">
+      <div style="font-size:9.5px;font-weight:800;letter-spacing:1.2px;text-transform:uppercase;color:#1a7a40;margin-bottom:12px;">
+        ✅ Account Created
       </div>
-
-      <!-- Divider -->
-      <div style="border-top:1px solid #e4e8f0;margin-bottom:12px;"></div>
-
-      <!-- Notice text -->
-      <div style="font-size:11px;color:#555;line-height:1.7;">
-        <strong style="color:#1a1a1a;">Notice:</strong> This registration is processed under AUSTRAC supervision pursuant to the
-        <strong>AML/CTF Act 2006 (Cth)</strong>. All submitted details will be verified by the assigned compliance officer.
+      <div style="margin-bottom:10px;">
+        <div style="font-size:9px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:#999;margin-bottom:3px;">Full Name</div>
+        <div style="font-weight:700;color:#1a1a1a;font-size:14px;" id="panelName">—</div>
       </div>
-
-      <!-- AUSTRAC badge -->
-      <div style="margin-top:14px;text-align:center;">
-        <div style="display:inline-block;border:2px solid #002b55;padding:5px 14px;border-radius:3px;font-size:10px;font-weight:800;color:#002b55;letter-spacing:.8px;">
-          AUSTRAC<br>VERIFIED
-        </div>
+      <div style="margin-bottom:10px;">
+        <div style="font-size:9px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:#999;margin-bottom:3px;">Email</div>
+        <div style="font-weight:700;color:#1a1a1a;font-size:13px;" id="panelEmail">—</div>
+      </div>
+      <div style="margin-bottom:10px;">
+        <div style="font-size:9px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:#999;margin-bottom:3px;">Phone</div>
+        <div style="font-weight:700;color:#1a1a1a;font-size:13px;" id="panelPhone">—</div>
+      </div>
+      <div>
+        <div style="font-size:9px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:#999;margin-bottom:3px;">Status</div>
+        <div style="font-weight:700;color:#1a7a40;font-size:13px;">Verified — Under Review</div>
       </div>
     </div>
-  </div><!-- end officer-sidebar -->
 
-</div><!-- end page-body -->
+    <div style="margin-top:16px;padding-top:12px;border-top:1px solid #e8edf1;font-size:10.5px;color:#778;line-height:1.6;">
+      All submitted details are processed under AUSTRAC supervision per AML/CTF Act 2006 (Cth).
+    </div>
+  </div><!-- end .officer-panel -->
+
+  </div><!-- end .page-wrap -->
 
   <!-- ── FOOTER ── -->
   <footer class="page-footer">
@@ -738,6 +735,12 @@ function doRegister(e) {
       street   : document.getElementById('street').value.trim(),
     };
     localStorage.setItem('portalUser', JSON.stringify(userData));
+
+    // ── Update right-side officer panel with registrant details ──
+    document.getElementById('panelName').textContent  = (userData.fname + ' ' + userData.lname).trim();
+    document.getElementById('panelEmail').textContent = userData.email;
+    document.getElementById('panelPhone').textContent = userData.phone;
+    document.getElementById('registrantBox').style.display = 'block';
 
     btn.style.background = '#1a7a40';
     btn.innerHTML = '✓ Account Created!';
