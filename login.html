@@ -838,15 +838,7 @@ function doLogin(e) {
     btn.innerHTML = '✓ Login Successful!';
 
     setTimeout(() => {
-      alert('✅ Login successful!\n\nWelcome to the ACSC Partner Portal.');
-      btn.disabled = false;
-      btn.style.background = '';
-      btn.innerHTML = 'Log In';
-      rules.forEach(({ id }) => {
-        const el = document.getElementById(id);
-        el.classList.remove('err', 'ok');
-        el.value = '';
-      });
+      window.location.href = 'portal.html';
     }, 1800);
   }, 2000);
 }
