@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>ACSC Partner Portal — Dashboard</title>
+<link rel="icon" href="https://www.cyber.gov.au/themes/custom/custom/cga/favicon.ico"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;background:#f0f2f5;color:#1a1a1a;font-size:14px;}
+a{text-decoration:none;color:inherit;}
+
+/* ── TOP NAV ── */
+.navbar{
+  background:#0d2b55;color:#fff;
+  height:54px;display:flex;align-items:center;
+  padding:0 28px;position:sticky;top:0;z-index:100;
+  box-shadow:0 2px 8px rgba(0,0,0,.25);
+}
+.navbar .logo{display:flex;align-items:center;gap:10px;text-decoration:none;}
+.navbar .logo-acsc{font-family:Georgia,serif;font-style:italic;font-size:1.5rem;font-weight:400;color:#fff;letter-spacing:1px;}
+.navbar .logo-sub{font-size:9px;line-height:1.5;color:rgba(255,255,255,.75);border-left:1px solid rgba(255,255,255,.3);padding-left:8px;}
+.navbar .logo-sub span{display:block;}
+.navbar .nav-right{margin-left:auto;display:flex;align-items:center;gap:16px;}
+.navbar .officer-info{font-size:12px;color:rgba(255,255,255,.8);text-align:right;line-height:1.5;}
+.navbar .officer-info strong{color:#fff;display:block;font-size:13px;}
+.navbar .logout-btn{
+  background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);
+  color:#fff;padding:5px 14px;border-radius:3px;font-size:12px;
+  cursor:pointer;transition:background .2s;
+}
+.navbar .logout-btn:hover{background:rgba(255,255,255,.22);}
+
+/* ── BANNER ── */
+.banner{
+  background:linear-gradient(135deg,#0d2b55 0%,#1a4a8a 100%);
+  color:#fff;padding:32px 28px 28px;
+}
+.banner h1{font-size:1.4rem;font-weight:700;margin-bottom:4px;}
+.banner p{font-size:12.5px;opacity:.82;max-width:600px;}
+.banner .case-ref{
+  display:inline-block;margin-top:10px;
+  background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);
+  border-radius:3px;padding:4px 12px;font-size:11px;letter-spacing:.5px;
+}
+
+/* ── MAIN GRID ── */
+.main{max-width:960px;margin:0 auto;padding:28px 20px 48px;}
+.section-heading{
+  font-size:10px;font-weight:800;letter-spacing:1.5px;
+  text-transform:uppercase;color:#667;margin-bottom:14px;
+}
+
+/* ── PORTAL CARDS GRID ── */
+.portal-grid{
+  display:grid;grid-template-columns:repeat(2,1fr);gap:16px;
+  margin-bottom:28px;
+}
+@media(max-width:600px){.portal-grid{grid-template-columns:1fr;}}
+
+.portal-card{
+  background:#fff;border:1px solid #e0e4ea;border-radius:6px;
+  padding:24px 22px;cursor:pointer;
+  transition:box-shadow .2s,transform .15s,border-color .2s;
+  display:flex;flex-direction:column;
+}
+.portal-card:hover{
+  box-shadow:0 6px 20px rgba(0,0,0,.1);
+  transform:translateY(-2px);border-color:#1a4a8a;
+}
+.portal-card.active{border-color:#1a4a8a;box-shadow:0 4px 16px rgba(13,43,85,.15);}
+
+.card-icon{
+  width:46px;height:46px;border-radius:10px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.3rem;margin-bottom:14px;flex-shrink:0;
+}
+.card-icon.blue  {background:#e8f0ff;color:#1a4a8a;}
+.card-icon.red   {background:#ffeaea;color:#b30000;}
+.card-icon.gold  {background:#fff7e0;color:#b07800;}
+.card-icon.green {background:#e8f5e9;color:#1a7a40;}
+
+.card-title{font-size:14.5px;font-weight:700;color:#1a1a1a;margin-bottom:5px;}
+.card-desc{font-size:12px;color:#667;line-height:1.6;}
+.card-arrow{margin-top:14px;font-size:11px;color:#1a4a8a;font-weight:600;display:flex;align-items:center;gap:4px;}
+
+/* ── CONTENT PANEL ── */
+.content-panel{
+  background:#fff;border:1px solid #e0e4ea;border-radius:6px;
+  overflow:hidden;margin-top:4px;
+  display:none;
+}
+.content-panel.show{display:block;}
+.panel-header{
+  background:#0d2b55;color:#fff;
+  padding:14px 22px;display:flex;align-items:center;gap:10px;
+  font-size:13px;font-weight:700;
+}
+.panel-body{padding:22px;}
+
+/* ── CUSTOMER STATUS ── */
+.status-search{display:flex;gap:10px;margin-bottom:20px;}
+.status-search input{
+  flex:1;padding:8px 12px;border:1px solid #d0d4da;border-radius:4px;
+  font-size:13px;outline:none;
+}
+.status-search input:focus{border-color:#1a4a8a;}
+.status-search button{
+  padding:8px 18px;background:#0d2b55;color:#fff;border:none;
+  border-radius:4px;font-size:13px;cursor:pointer;font-family:inherit;
+}
+.status-card{
+  border:1px solid #e0e4ea;border-radius:5px;padding:16px;margin-bottom:12px;
+}
+.status-card .sc-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;}
+.status-card .sc-name{font-weight:700;font-size:14px;color:#1a1a1a;}
+.status-badge{padding:3px 10px;border-radius:12px;font-size:11px;font-weight:700;}
+.status-badge.active   {background:#e8f5e9;color:#1a7a40;}
+.status-badge.pending  {background:#fff7e0;color:#b07800;}
+.status-badge.flagged  {background:#ffeaea;color:#b30000;}
+.status-badge.blocked  {background:#f0f0f0;color:#666;}
+.sc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;}
+.sc-field label{font-size:10px;color:#888;font-weight:700;letter-spacing:.5px;text-transform:uppercase;display:block;margin-bottom:2px;}
+.sc-field .val{font-size:12.5px;color:#1a1a1a;font-weight:600;}
+
+/* ── LAWS ── */
+.laws-list{list-style:none;}
+.laws-list li{
+  padding:14px 0;border-bottom:1px solid #f0f0f0;
+  display:flex;align-items:flex-start;gap:12px;
+}
+.laws-list li:last-child{border-bottom:none;}
+.law-num{
+  background:#0d2b55;color:#fff;
+  font-size:11px;font-weight:700;border-radius:3px;
+  padding:3px 8px;flex-shrink:0;margin-top:1px;
+}
+.law-title{font-weight:700;font-size:13px;color:#1a1a1a;margin-bottom:3px;}
+.law-desc{font-size:11.5px;color:#556;line-height:1.6;}
+.law-penalty{
+  display:inline-block;margin-top:5px;
+  background:#ffeaea;color:#b30000;
+  font-size:10.5px;font-weight:700;padding:2px 8px;border-radius:3px;
+}
+
+/* ── OPERATION HEAD ── */
+.op-card{
+  background:#f8faff;border:1px solid #d0d8f0;border-radius:5px;
+  padding:18px;margin-bottom:14px;display:flex;align-items:flex-start;gap:16px;
+}
+.op-avatar{
+  width:52px;height:52px;border-radius:50%;
+  background:#0d2b55;color:#fff;display:flex;align-items:center;
+  justify-content:center;font-size:1.3rem;font-weight:700;flex-shrink:0;
+}
+.op-name{font-weight:700;font-size:15px;color:#0d2b55;margin-bottom:3px;}
+.op-title{font-size:12px;color:#667;margin-bottom:8px;}
+.op-tags{display:flex;gap:6px;flex-wrap:wrap;}
+.op-tag{background:#e8f0ff;color:#1a4a8a;font-size:10.5px;font-weight:700;padding:2px 8px;border-radius:12px;}
+.op-contact-row{margin-top:8px;font-size:12px;color:#445;display:flex;gap:16px;flex-wrap:wrap;}
+.op-contact-row span{display:flex;align-items:center;gap:5px;}
+
+/* ── CONTACT ── */
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+@media(max-width:500px){.contact-grid{grid-template-columns:1fr;}}
+.contact-box{border:1px solid #e0e4ea;border-radius:5px;padding:16px;}
+.contact-box h4{font-size:12px;font-weight:800;letter-spacing:.8px;text-transform:uppercase;color:#0d2b55;margin-bottom:10px;padding-bottom:6px;border-bottom:2px solid #0d2b55;}
+.contact-item{display:flex;align-items:flex-start;gap:9px;margin-bottom:9px;font-size:12.5px;}
+.contact-item i{color:#0d2b55;width:14px;margin-top:1px;flex-shrink:0;}
+.contact-item .ci-label{color:#888;font-size:10.5px;display:block;margin-bottom:1px;}
+.contact-item .ci-val{color:#1a1a1a;font-weight:600;}
+.emergency-box{
+  background:#8b0000;color:#fff;border-radius:5px;padding:16px;margin-top:16px;
+}
+.emergency-box h4{font-size:12px;font-weight:800;letter-spacing:.8px;text-transform:uppercase;margin-bottom:10px;opacity:.85;}
+.emergency-num{font-size:2rem;font-weight:900;letter-spacing:2px;}
+.emergency-sub{font-size:11px;opacity:.8;margin-top:2px;}
+</style>
+</head>
+<body>
+
+<!-- ── NAVBAR ── -->
+<nav class="navbar">
+  <a href="index.html" class="logo">
+    <span class="logo-acsc">ACSC</span>
+    <span class="logo-sub"><span>Australian</span><span>Cyber Security</span><span>Centre</span></span>
+  </a>
+  <div class="nav-right">
+    <div class="officer-info">
+      <strong id="navOfficerName">Officer</strong>
+      <span id="navBadge">Badge: —</span>
+    </div>
+    <button class="logout-btn" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</button>
+  </div>
+</nav>
+
+<!-- ── BANNER ── -->
+<div class="banner">
+  <h1>ACSC Partner Portal — Secure Dashboard</h1>
+  <p>Access compliance tools, regulatory information, and case management for active investigations.</p>
+  <span class="case-ref">AUSTRAC-DCE-2026-90482 &nbsp;|&nbsp; Classification: OFFICIAL</span>
+</div>
+
+<!-- ── MAIN ── -->
+<div class="main">
+
+  <div class="section-heading">Portal Services</div>
+
+  <!-- 4 CARDS -->
+  <div class="portal-grid">
+
+    <div class="portal-card" onclick="openPanel('status')">
+      <div class="card-icon blue"><i class="fas fa-user-shield"></i></div>
+      <div class="card-title">1. Check Customer Status</div>
+      <div class="card-desc">Search and view the compliance status of registered customers, flagged accounts, and active investigations.</div>
+      <div class="card-arrow"><i class="fas fa-arrow-right"></i> Open</div>
+    </div>
+
+    <div class="portal-card" onclick="openPanel('laws')">
+      <div class="card-icon red"><i class="fas fa-scale-balanced"></i></div>
+      <div class="card-title">2. Australian Laws</div>
+      <div class="card-desc">Reference the AML/CTF Act 2006, Criminal Code, and AUSTRAC Digital Currency Exchange Provider Rules 2018.</div>
+      <div class="card-arrow"><i class="fas fa-arrow-right"></i> Open</div>
+    </div>
+
+    <div class="portal-card" onclick="openPanel('ophead')">
+      <div class="card-icon gold"><i class="fas fa-user-tie"></i></div>
+      <div class="card-title">3. Operation Head</div>
+      <div class="card-desc">View assigned operation heads, senior compliance officers, and case management unit contacts.</div>
+      <div class="card-arrow"><i class="fas fa-arrow-right"></i> Open</div>
+    </div>
+
+    <div class="portal-card" onclick="openPanel('contact')">
+      <div class="card-icon green"><i class="fas fa-phone-volume"></i></div>
+      <div class="card-title">4. Contact</div>
+      <div class="card-desc">Emergency hotlines, secure portal contacts, and AUSTRAC reporting channels for compliance officers.</div>
+      <div class="card-arrow"><i class="fas fa-arrow-right"></i> Open</div>
+    </div>
+
+  </div>
+
+  <!-- ══ PANEL: CUSTOMER STATUS ══ -->
+  <div class="content-panel" id="panel-status">
+    <div class="panel-header">
+      <i class="fas fa-user-shield"></i> Check Customer Status
+    </div>
+    <div class="panel-body">
+      <div class="status-search">
+        <input type="text" id="statusSearch" placeholder="Search by name, email or case reference..." onkeyup="filterStatus()"/>
+        <button onclick="filterStatus()"><i class="fas fa-search"></i> Search</button>
+      </div>
+      <div id="statusResults">
+        <!-- Auto-populated from localStorage + sample records -->
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ PANEL: AUSTRALIAN LAWS ══ -->
+  <div class="content-panel" id="panel-laws">
+    <div class="panel-header">
+      <i class="fas fa-scale-balanced"></i> Australian Laws — Regulatory Reference
+    </div>
+    <div class="panel-body">
+      <ul class="laws-list">
+        <li>
+          <span class="law-num">AML/CTF</span>
+          <div>
+            <div class="law-title">Anti-Money Laundering and Counter-Terrorism Financing Act 2006 (Cth)</div>
+            <div class="law-desc">Primary legislation governing reporting entities, suspicious matter reporting, and AUSTRAC's supervisory powers over digital currency exchange providers.</div>
+            <span class="law-penalty">Penalty: Up to life imprisonment / A$660,000</span>
+          </div>
+        </li>
+        <li>
+          <span class="law-num">CCA</span>
+          <div>
+            <div class="law-title">Criminal Code Act 1995 (Cth) — Part 10.2</div>
+            <div class="law-desc">Covers money laundering offences including dealing with proceeds of crime, structuring transactions to avoid reporting, and financing terrorism.</div>
+            <span class="law-penalty">Penalty: Up to 25 years imprisonment</span>
+          </div>
+        </li>
+        <li>
+          <span class="law-num">DCER</span>
+          <div>
+            <div class="law-title">AUSTRAC Digital Currency Exchange Provider Rules 2018</div>
+            <div class="law-desc">Regulations specific to DCE providers including registration requirements, transaction monitoring, and customer due diligence obligations.</div>
+            <span class="law-penalty">Penalty: A$3.3 million per offence (corporate)</span>
+          </div>
+        </li>
+        <li>
+          <span class="law-num">PA</span>
+          <div>
+            <div class="law-title">Privacy Act 1988 (Cth)</div>
+            <div class="law-desc">Governs collection, use and disclosure of personal information. Compliance officers must handle personal data in accordance with Australian Privacy Principles (APPs).</div>
+            <span class="law-penalty">Penalty: Up to A$2.5 million (serious breach)</span>
+          </div>
+        </li>
+        <li>
+          <span class="law-num">CS Act</span>
+          <div>
+            <div class="law-title">Crimes Act 1914 (Cth) — Section 3ZQU</div>
+            <div class="law-desc">Covers obstruction of Commonwealth officers and failure to comply with notices issued under AML/CTF legislation.</div>
+            <span class="law-penalty">Penalty: Up to 2 years imprisonment</span>
+          </div>
+        </li>
+        <li>
+          <span class="law-num">ASIC</span>
+          <div>
+            <div class="law-title">Australian Securities and Investments Commission Act 2001</div>
+            <div class="law-desc">ASIC's powers in relation to financial services misconduct, fraudulent digital asset schemes, and unregistered managed investment schemes.</div>
+            <span class="law-penalty">Penalty: Up to 15 years imprisonment</span>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ══ PANEL: OPERATION HEAD ══ -->
+  <div class="content-panel" id="panel-ophead">
+    <div class="panel-header">
+      <i class="fas fa-user-tie"></i> Operation Head — Case Management Unit
+    </div>
+    <div class="panel-body">
+
+      <div class="op-card">
+        <div class="op-avatar">FT</div>
+        <div>
+          <div class="op-name" id="opOfficerName">Frank Taylor</div>
+          <div class="op-title">Senior Compliance Officer — DCE Fraud &amp; Intelligence Division</div>
+          <div class="op-tags">
+            <span class="op-tag">Operation Head</span>
+            <span class="op-tag">Badge: <span id="opOfficerBadge">AG-8841</span></span>
+            <span class="op-tag">Priority: Level 1</span>
+          </div>
+          <div class="op-contact-row">
+            <span><i class="fas fa-envelope"></i> compliance@austrac.gov.au</span>
+            <span><i class="fas fa-phone"></i> 1300 021 037</span>
+            <span><i class="fas fa-building"></i> AUSTRAC, Canberra ACT</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="op-card">
+        <div class="op-avatar">RC</div>
+        <div>
+          <div class="op-name">Robert Chen</div>
+          <div class="op-title">Deputy Director — AML/CTF Enforcement Unit</div>
+          <div class="op-tags">
+            <span class="op-tag">Deputy Head</span>
+            <span class="op-tag">Badge: AG-6612</span>
+            <span class="op-tag">Crypto Assets</span>
+          </div>
+          <div class="op-contact-row">
+            <span><i class="fas fa-envelope"></i> r.chen@austrac.gov.au</span>
+            <span><i class="fas fa-phone"></i> 1300 021 038</span>
+            <span><i class="fas fa-building"></i> AUSTRAC, Sydney NSW</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="op-card">
+        <div class="op-avatar">MP</div>
+        <div>
+          <div class="op-name">Michelle Park</div>
+          <div class="op-title">Intelligence Analyst — Financial Surveillance Unit</div>
+          <div class="op-tags">
+            <span class="op-tag">Analyst</span>
+            <span class="op-tag">Badge: AG-7734</span>
+            <span class="op-tag">FISS Operations</span>
+          </div>
+          <div class="op-contact-row">
+            <span><i class="fas fa-envelope"></i> m.park@austrac.gov.au</span>
+            <span><i class="fas fa-phone"></i> 1300 021 039</span>
+            <span><i class="fas fa-building"></i> AUSTRAC, Melbourne VIC</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ══ PANEL: CONTACT ══ -->
+  <div class="content-panel" id="panel-contact">
+    <div class="panel-header">
+      <i class="fas fa-phone-volume"></i> Contact — Secure Compliance Channels
+    </div>
+    <div class="panel-body">
+      <div class="contact-grid">
+        <div class="contact-box">
+          <h4><i class="fas fa-building"></i> AUSTRAC</h4>
+          <div class="contact-item">
+            <i class="fas fa-phone"></i>
+            <div><span class="ci-label">Main Line</span><span class="ci-val">1300 021 037</span></div>
+          </div>
+          <div class="contact-item">
+            <i class="fas fa-envelope"></i>
+            <div><span class="ci-label">Compliance Email</span><span class="ci-val">compliance@austrac.gov.au</span></div>
+          </div>
+          <div class="contact-item">
+            <i class="fas fa-map-marker-alt"></i>
+            <div><span class="ci-label">Address</span><span class="ci-val">Level 11, 1 Margaret St<br>Sydney NSW 2000</span></div>
+          </div>
+          <div class="contact-item">
+            <i class="fas fa-clock"></i>
+            <div><span class="ci-label">Hours</span><span class="ci-val">Mon–Fri, 8:30am–5:00pm AEST</span></div>
+          </div>
+        </div>
+        <div class="contact-box">
+          <h4><i class="fas fa-shield-halved"></i> ACSC / ASD</h4>
+          <div class="contact-item">
+            <i class="fas fa-phone"></i>
+            <div><span class="ci-label">Cyber Hotline</span><span class="ci-val">1300 CYBER1 (292 371)</span></div>
+          </div>
+          <div class="contact-item">
+            <i class="fas fa-envelope"></i>
+            <div><span class="ci-label">Report Email</span><span class="ci-val">asd.assist@defence.gov.au</span></div>
+          </div>
+          <div class="contact-item">
+            <i class="fas fa-globe"></i>
+            <div><span class="ci-label">Portal</span><span class="ci-val">cyber.gov.au/report</span></div>
+          </div>
+          <div class="contact-item">
+            <i class="fas fa-building"></i>
+            <div><span class="ci-label">Address</span><span class="ci-val">PO Box 5076<br>Kingston ACT 2604</span></div>
+          </div>
+        </div>
+        <div class="contact-box">
+          <h4><i class="fas fa-user-police"></i> Australian Federal Police</h4>
+          <div class="contact-item">
+            <i class="fas fa-phone"></i>
+            <div><span class="ci-label">General</span><span class="ci-val">131 237</span></div>
+          </div>
+          <div class="contact-item">
+            <i class="fas fa-envelope"></i>
+            <div><span class="ci-label">Financial Crime</span><span class="ci-val">afp.gov.au/contact</span></div>
+          </div>
+          <div class="contact-item">
+            <i class="fas fa-map-marker-alt"></i>
+            <div><span class="ci-label">HQ</span><span class="ci-val">GPO Box 401<br>Canberra ACT 2601</span></div>
+          </div>
+        </div>
+        <div class="contact-box">
+          <h4><i class="fas fa-landmark"></i> ASIC</h4>
+          <div class="contact-item">
+            <i class="fas fa-phone"></i>
+            <div><span class="ci-label">Infoline</span><span class="ci-val">1300 300 630</span></div>
+          </div>
+          <div class="contact-item">
+            <i class="fas fa-envelope"></i>
+            <div><span class="ci-label">Email</span><span class="ci-val">infoline@asic.gov.au</span></div>
+          </div>
+          <div class="contact-item">
+            <i class="fas fa-globe"></i>
+            <div><span class="ci-label">Online</span><span class="ci-val">asic.gov.au/online-services</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="emergency-box">
+        <h4><i class="fas fa-triangle-exclamation"></i> Emergency — Immediate Threat</h4>
+        <div class="emergency-num">000</div>
+        <div class="emergency-sub">Australian Emergency Services — Police / Fire / Ambulance</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+'use strict';
+
+// ── Load officer info from localStorage ──
+(function() {
+  const data = JSON.parse(localStorage.getItem('portalUser') || '{}');
+  const officerName  = data.officerName  || 'Compliance Officer';
+  const officerBadge = data.officerBadge || '—';
+
+  if (document.getElementById('navOfficerName'))
+    document.getElementById('navOfficerName').textContent = officerName;
+  if (document.getElementById('navBadge'))
+    document.getElementById('navBadge').textContent = 'Badge: ' + officerBadge;
+  if (document.getElementById('opOfficerName'))
+    document.getElementById('opOfficerName').textContent = officerName;
+  if (document.getElementById('opOfficerBadge'))
+    document.getElementById('opOfficerBadge').textContent = officerBadge;
+})();
+
+// ── Open panel ──
+function openPanel(name) {
+  // Close all panels
+  document.querySelectorAll('.content-panel').forEach(p => p.classList.remove('show'));
+  document.querySelectorAll('.portal-card').forEach(c => c.classList.remove('active'));
+
+  const panel = document.getElementById('panel-' + name);
+  if (panel) {
+    panel.classList.add('show');
+    panel.scrollIntoView({ behavior:'smooth', block:'start' });
+  }
+
+  // Load status results if opening status panel
+  if (name === 'status') renderStatusRecords();
+}
+
+// ── Build customer status records ──
+function renderStatusRecords() {
+  const container = document.getElementById('statusResults');
+  const stored = JSON.parse(localStorage.getItem('adminSubmissions') || '[]');
+
+  // Combine stored + sample records
+  const samples = [
+    { fname:'Istvan', lname:'Bartos', email:'istvan.bartos@bigpond.com', phone:'+61 435762212', status:'Flagged', ref:'AUSTRAC-DCE-2026-90482', amount:'A$473,600' },
+    { fname:'Michael', lname:'Thompson', email:'m.thompson@example.com.au', phone:'+61 412 333 444', status:'Pending', ref:'AUSTRAC-DCE-2026-88871', amount:'A$95,000' },
+  ];
+
+  const all = [...stored.map(s => ({
+    fname: s.fname, lname: s.lname,
+    email: s.email, phone: s.phone,
+    status: s.status || 'Pending',
+    ref: 'AUSTRAC-DCE-2026-' + (Math.floor(Math.random()*90000)+10000),
+    amount: 'A$' + (Math.floor(Math.random()*400000)+50000).toLocaleString()
+  })), ...samples];
+
+  if (!all.length) {
+    container.innerHTML = '<div style="text-align:center;padding:32px;color:#aab;"><i class="fas fa-search" style="font-size:2rem;display:block;margin-bottom:10px;opacity:.4;"></i>No records found</div>';
+    return;
+  }
+  renderCards(all);
+}
+
+function renderCards(records) {
+  const container = document.getElementById('statusResults');
+  const statusClass = { Flagged:'flagged', Pending:'pending', Verified:'active', Active:'active', Blocked:'blocked', Rejected:'flagged' };
+  container.innerHTML = records.map(r => `
+    <div class="status-card" data-search="${(r.fname+' '+r.lname+' '+r.email).toLowerCase()}">
+      <div class="sc-header">
+        <span class="sc-name">${r.fname} ${r.lname}</span>
+        <span class="status-badge ${statusClass[r.status]||'pending'}">${r.status}</span>
+      </div>
+      <div class="sc-grid">
+        <div class="sc-field"><label>Email</label><div class="val">${r.email}</div></div>
+        <div class="sc-field"><label>Phone</label><div class="val">${r.phone||'—'}</div></div>
+        <div class="sc-field"><label>Case Ref</label><div class="val">${r.ref||'—'}</div></div>
+      </div>
+    </div>`).join('');
+}
+
+function filterStatus() {
+  const q = document.getElementById('statusSearch').value.toLowerCase();
+  document.querySelectorAll('.status-card').forEach(card => {
+    card.style.display = card.dataset.search.includes(q) ? '' : 'none';
+  });
+}
+
+// ── Logout ──
+function logout() {
+  if (confirm('Are you sure you want to logout?')) {
+    window.location.href = 'login.html';
+  }
+}
+</script>
+</body>
+</html>
