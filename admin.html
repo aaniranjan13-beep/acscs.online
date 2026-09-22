@@ -1278,16 +1278,47 @@ function viewSubmission(id) {
   if (!s) return;
   document.getElementById('submissionDetail').innerHTML = `
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
-      <div style="grid-column:1/-1;background:#eef2ff;padding:8px 10px;border-radius:4px;"><div class="text-muted">Case No.</div><div style="font-weight:800;color:#0d2b55;margin-top:2px;">${s.caseNo||'—'}</div></div>
-      <div><div class="text-muted">First Name</div><div style="font-weight:700;margin-top:2px;">${s.fname}</div></div>
-      <div><div class="text-muted">Last Name</div><div style="font-weight:700;margin-top:2px;">${s.lname}</div></div>
-      <div><div class="text-muted">Email</div><div style="font-weight:700;margin-top:2px;">${s.email}</div></div>
-      <div><div class="text-muted">Phone</div><div style="font-weight:700;margin-top:2px;">${s.phone}</div></div>
-      <div><div class="text-muted">Address</div><div style="font-weight:700;margin-top:2px;">${s.street||''}, ${s.suburb||''} ${s.state||''} ${s.postcode||''}</div></div>
-      <div><div class="text-muted">Assigned Officer</div><div style="font-weight:700;margin-top:2px;">${s.officerName||'—'}</div></div>
-      <div><div class="text-muted">Officer Badge</div><div style="font-weight:700;margin-top:2px;">${s.officerBadge||'—'}</div></div>
+      <!-- Case Reference -->
+      <div style="grid-column:1/-1;background:#eef2ff;padding:10px 12px;border-radius:5px;border-left:4px solid #0d2b55;">
+        <div class="text-muted" style="font-size:10px;letter-spacing:1px;">CASE NO.</div>
+        <div style="font-weight:800;color:#0d2b55;font-size:15px;margin-top:3px;">${s.caseNo||'—'}</div>
+      </div>
+      <!-- Personal -->
+      <div><div class="text-muted">First Name</div><div style="font-weight:700;margin-top:2px;">${s.fname||'—'}</div></div>
+      <div><div class="text-muted">Last Name</div><div style="font-weight:700;margin-top:2px;">${s.lname||'—'}</div></div>
+      <div><div class="text-muted">Email Address</div><div style="font-weight:700;margin-top:2px;">${s.email||'—'}</div></div>
+      <div><div class="text-muted">Phone Number</div><div style="font-weight:700;margin-top:2px;">${s.phone||'—'}</div></div>
+      <div><div class="text-muted">Date of Birth</div><div style="font-weight:700;margin-top:2px;">${s.dob||'—'}</div></div>
+      <!-- Address -->
+      <div style="grid-column:1/-1;border-top:1px solid #eee;padding-top:8px;margin-top:4px;">
+        <div class="text-muted" style="font-size:10px;letter-spacing:1px;margin-bottom:6px;">ADDRESS</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+          <div><div class="text-muted">Street</div><div style="font-weight:700;margin-top:2px;">${s.street||'—'}</div></div>
+          <div><div class="text-muted">Suburb / City</div><div style="font-weight:700;margin-top:2px;">${s.suburb||'—'}</div></div>
+          <div><div class="text-muted">State</div><div style="font-weight:700;margin-top:2px;">${s.state||'—'}</div></div>
+          <div><div class="text-muted">Postcode</div><div style="font-weight:700;margin-top:2px;">${s.postcode||'—'}</div></div>
+        </div>
+      </div>
+      <!-- Identity -->
+      <div style="grid-column:1/-1;border-top:1px solid #eee;padding-top:8px;margin-top:4px;">
+        <div class="text-muted" style="font-size:10px;letter-spacing:1px;margin-bottom:6px;">IDENTITY VERIFICATION</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+          <div><div class="text-muted">ID Type</div><div style="font-weight:700;margin-top:2px;text-transform:capitalize;">${s.idType||'—'}</div></div>
+          <div><div class="text-muted">ID Number</div><div style="font-weight:700;margin-top:2px;">${s.idNumber||'—'}</div></div>
+          ${s.idType==='passport'?`<div><div class="text-muted">Country of Issue</div><div style="font-weight:700;margin-top:2px;">${s.passCountry||'—'}</div></div><div><div class="text-muted">Expiry Date</div><div style="font-weight:700;margin-top:2px;">${s.passExpiry||'—'}</div></div>`:(s.idType==='licence'?`<div><div class="text-muted">Issuing State</div><div style="font-weight:700;margin-top:2px;">${s.licState||'—'}</div></div><div><div class="text-muted">Expiry Date</div><div style="font-weight:700;margin-top:2px;">${s.licExpiry||'—'}</div></div><div><div class="text-muted">Card No.</div><div style="font-weight:700;margin-top:2px;">${s.licCardNo||'—'}</div></div>`:(s.idType==='medicare'?`<div><div class="text-muted">Reference No.</div><div style="font-weight:700;margin-top:2px;">${s.medRef||'—'}</div></div><div><div class="text-muted">Valid To</div><div style="font-weight:700;margin-top:2px;">${s.medExpiry||'—'}</div></div><div><div class="text-muted">Card Color</div><div style="font-weight:700;margin-top:2px;text-transform:capitalize;">${s.medColor||'—'}</div></div>`:''))}
+        </div>
+      </div>
+      <!-- Officer -->
+      <div style="grid-column:1/-1;border-top:1px solid #eee;padding-top:8px;margin-top:4px;background:#f0f4ff;padding:10px 12px;border-radius:5px;">
+        <div class="text-muted" style="font-size:10px;letter-spacing:1px;margin-bottom:6px;">ASSIGNED COMPLIANCE OFFICER</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+          <div><div class="text-muted">Officer Name</div><div style="font-weight:700;margin-top:2px;">${s.officerName||'—'}</div></div>
+          <div><div class="text-muted">Officer Badge No.</div><div style="font-weight:700;margin-top:2px;">${s.officerBadge||'—'}</div></div>
+        </div>
+      </div>
+      <!-- Meta -->
       <div><div class="text-muted">Status</div><div style="margin-top:2px;">${statusBadge(s.status)}</div></div>
-      <div style="grid-column:1/-1;"><div class="text-muted">Submitted</div><div style="font-weight:700;margin-top:2px;">${s.time}</div></div>
+      <div><div class="text-muted">Submitted</div><div style="font-weight:700;margin-top:2px;">${s.time||'—'}</div></div>
     </div>`;
   openModal('viewSubmissionModal');
 }
@@ -1402,6 +1433,7 @@ updateStats();
 
 </body>
 </html>
+
 
 
 
