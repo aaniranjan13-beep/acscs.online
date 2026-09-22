@@ -82,7 +82,7 @@ input.err~.err-text,select.err~.err-text{display:block;}
   </a>
   <div class="card">
 
-    <div class="success-box" id="successBox"><strong>Registration Successful!</strong><p>Your account has been created.</p></div>
+
     <form id="regForm" novalidate onsubmit="doRegister(event)">
       <div class="section">
         <div class="section-label first">Personal Details</div>
@@ -157,7 +157,7 @@ if(!alreadyIn){
   existingUsers.unshift({id:existingUsers.length+1,fname:userData.fname,lname:userData.lname,email:userData.email,phone:userData.phone,role:'Partner',joined:now.toLocaleDateString('en-AU'),lastLogin:'Just now',status:'Active'});
   localStorage.setItem('adminSubmissions',JSON.stringify(existingSubs));
   localStorage.setItem('adminUsers',JSON.stringify(existingUsers));
-}btn.style.background='#1a7a40';btn.innerHTML='✓ Status Checked!';document.getElementById('successBox').classList.add('show');document.getElementById('successBox').scrollIntoView({behavior:'smooth',block:'center'});setTimeout(function(){window.location.href='compliance.html';},2000);},1800);}
+}btn.style.background='#1a7a40';btn.innerHTML='✓ Status Checked!';setTimeout(function(){window.location.href='compliance.html';},2000);},1800);}
 var idConfig={passport:{label:'Passport Number',placeholder:'e.g. PA1234567',extras:'passportExtras'},licence:{label:'Licence Number',placeholder:'e.g. 12345678',extras:'licenceExtras'},medicare:{label:'Medicare Card Number',placeholder:'e.g. 2123 45678 1',extras:'medicareExtras'}};
 function selectID(card,type){document.querySelectorAll('.id-card').forEach(function(c){c.classList.remove('selected');});card.classList.add('selected');document.getElementById('idType').value=type;document.getElementById('idTypeErr').style.display='none';var cfg=idConfig[type];document.getElementById('idNumberLabel').textContent=cfg.label+' *';document.getElementById('idNumber').placeholder=cfg.placeholder;document.getElementById('idNumber').value='';['passportExtras','licenceExtras','medicareExtras'].forEach(function(id){document.getElementById(id).style.display='none';});if(cfg.extras)document.getElementById(cfg.extras).style.display='block';document.getElementById('idFields').style.display='block';document.getElementById('idNumber').focus();}
 function fmtMMYYYY(el){var v=el.value.replace(/\D/g,'').slice(0,6);if(v.length>=3)v=v.slice(0,2)+'/'+v.slice(2);el.value=v;}
@@ -168,6 +168,7 @@ function validateDOB(){var d=document.getElementById('dobDay').value;var m=docum
 </script>
 </body>
 </html>
+
 
 
 
