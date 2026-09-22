@@ -195,7 +195,7 @@ tbody td{padding:9px 10px;vertical-align:top;line-height:1.5;}
 <!-- ── TOP BAR ── -->
 <div class="portal-bar">
   <strong>ACSC PARTNER PORTAL — SECURE COMPLIANCE DOCUMENT</strong>
-  <span class="ref">REF: AUSTRAC-DCE-2026-90482 &nbsp;|&nbsp; CLASSIFICATION: OFFICIAL</span>
+  <span class="ref">REF: <span id="caseRefTop">AUSTRAC-DCE-2026-90482</span> &nbsp;|&nbsp; CLASSIFICATION: OFFICIAL</span>
 </div>
 
 <!-- ── HEADER ── -->
@@ -219,7 +219,7 @@ tbody td{padding:9px 10px;vertical-align:top;line-height:1.5;}
 <!-- ── DATE META ── -->
 <div class="meta-bar">
   <div><span>Notice Issued: </span><strong id="metaDate">13 September 2026</strong></div>
-  <div><span>Response Deadline: </span><strong style="color:#b30000;">20 September 2026, 5:00 PM AEST</strong></div>
+  <div><span>Response Deadline: </span><strong style="color:#b30000;" id="responseDeadline">20 September 2026, 5:00 PM AEST</strong></div>
   <div><span>Document: </span><strong>AUSTRAC — Formal Compliance Notice | DCE-2026-90482</strong></div>
 </div>
 
@@ -350,7 +350,7 @@ tbody td{padding:9px 10px;vertical-align:top;line-height:1.5;}
   <div class="section-title">Assigned Compliance Officer &amp; Case Details</div>
   <div class="officer-box">
     <strong>AUSTRAC — BCE ENFORCEMENT &amp; CASE MANAGEMENT UNIT</strong>
-    <span class="case-badge">CASE: AUSTRAC-DCE-2026-90482</span>
+    <span class="case-badge">CASE: <span id="caseRefBadge">AUSTRAC-DCE-2026-90482</span></span>
   </div>
   <div class="officer-grid">
     <div class="cell"><label>Assigned Officer</label><div class="val" id="officerNameDisplay">Frank Taylor</div></div>
@@ -421,7 +421,7 @@ tbody td{padding:9px 10px;vertical-align:top;line-height:1.5;}
   <div class="footer-bottom">
     <div>
       📍 Level 11, 1 Margaret Street, Sydney NSW 2000 &nbsp;|&nbsp; GPO Box 3016, Sydney NSW 2001<br>
-      ABN 65 031 411 881 &nbsp;|&nbsp; AML/CTF Act 2006 (Cth) &nbsp;|&nbsp; Ref: AUSTRAC-DCE-2026-90482
+      ABN 65 031 411 881 &nbsp;|&nbsp; AML/CTF Act 2006 (Cth) &nbsp;|&nbsp; REF: <span id="caseRefTop">AUSTRAC-DCE-2026-90482</span>
     </div>
     <div class="austrac-verified">AUSTRAC<br>VERIFIED NOTICE</div>
   </div>
@@ -454,17 +454,31 @@ tbody td{padding:9px 10px;vertical-align:top;line-height:1.5;}
   document.getElementById('officerFooterName').textContent   = officerName;
   document.getElementById('officerFooterBadge').textContent  = officerBadge;
 })();
-  // Set Compliance Deadline to today's date
+  // Set Response Deadline to today's date
   (function(){
     var today = new Date();
     var opts = { day:'numeric', month:'long', year:'numeric' };
-    var dateStr = today.toLocaleDateString('en-AU', opts);
-    var el = document.getElementById('complianceDeadline');
+    var dateStr = today.toLocaleDateString('en-AU', opts) + ', 5:00 PM AEST';
+    var el = document.getElementById('responseDeadline');
     if(el) el.textContent = dateStr;
+    var dl = document.getElementById('complianceDeadline');
+    if(dl) dl.textContent = today.toLocaleDateString('en-AU', opts);
+  })();
+  // Set Case No from register form (portalUser.caseNo)
+  (function(){
+    var data = JSON.parse(localStorage.getItem('portalUser') || '{}');
+    var caseNo = data.caseNo || 'AUSTRAC-DCE-2026-90482';
+    ['caseRefTop','caseRefBadge','caseRefFooter'].forEach(function(id){
+      var el = document.getElementById(id);
+      if(el) el.textContent = caseNo;
+    });
+    var badge = document.getElementById('caseRefBadge');
   })();
 </script>
 </body>
 </html>
+
+
 
 
 
