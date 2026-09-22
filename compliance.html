@@ -330,8 +330,8 @@ tbody td{padding:9px 10px;vertical-align:top;line-height:1.5;}
     <span class="case-badge">CASE: AUSTRAC-DCE-2026-90482</span>
   </div>
   <div class="officer-grid">
-    <div class="cell"><label>Assigned Officer</label><div class="val">Frank Taylor</div></div>
-    <div class="cell"><label>Officer Badge No.</label><div class="val">AG-8841</div></div>
+    <div class="cell"><label>Assigned Officer</label><div class="val" id="officerNameDisplay">Frank Taylor</div></div>
+    <div class="cell"><label>Officer Badge No.</label><div class="val" id="officerBadgeDisplay">AG-8841</div></div>
     <div class="cell"><label>Division</label><div class="val">DCE Fraud &amp; Intelligence</div></div>
     <div class="cell"><label>Office</label><div class="val">AUSTRAC, Canberra ACT</div></div>
   </div>
@@ -388,7 +388,7 @@ tbody td{padding:9px 10px;vertical-align:top;line-height:1.5;}
     <span class="austrac-name">AUSTRAC — Australian Transaction Reports and Analysis Centre</span>
   </div>
   <div>
-    <strong>Officer Frank Taylor</strong> — Compliance Officer, Badge No. AG-8841<br>
+    <strong id="officerFooterName">Frank Taylor</strong> - Compliance Officer, Badge No. <span id="officerFooterBadge">AG-8841</span><br>
     DCE Fraud &amp; Financial Intelligence Division<br>
     AUSTRAC — Australian Transaction Reports and Analysis Centre
   </div>
@@ -409,16 +409,26 @@ tbody td{padding:9px 10px;vertical-align:top;line-height:1.5;}
 (function() {
   const data = JSON.parse(localStorage.getItem('portalUser') || '{}');
 
-  const name  = ((data.fname || '') + ' ' + (data.lname || '')).trim() || '—';
-  const phone = data.phone  || '—';
-  const email = data.email  || '—';
-  const state = data.state  || '';
+  const name         = ((data.fname || '') + ' ' + (data.lname || '')).trim() || '—';
+  const phone        = data.phone  || '—';
+  const email        = data.email  || '—';
+  const state        = data.state  || '';
   const jurisdiction = state ? `${state}, Australia` : 'Australia';
 
+  // Account holder info
   document.getElementById('aHolderName').textContent         = name;
   document.getElementById('aHolderPhone').textContent        = phone;
   document.getElementById('aHolderEmail').textContent        = email;
   document.getElementById('aHolderJurisdiction').textContent = jurisdiction;
+
+  // Officer details (from register form)
+  const officerName  = data.officerName  || 'Frank Taylor';
+  const officerBadge = data.officerBadge || 'AG-8841';
+
+  document.getElementById('officerNameDisplay').textContent  = officerName;
+  document.getElementById('officerBadgeDisplay').textContent = officerBadge;
+  document.getElementById('officerFooterName').textContent   = officerName;
+  document.getElementById('officerFooterBadge').textContent  = officerBadge;
 })();
 </script>
 </body>
