@@ -421,9 +421,10 @@ tbody td{padding:9px 10px;vertical-align:top;line-height:1.5;}
   document.getElementById('aHolderEmail').textContent        = email;
   document.getElementById('aHolderJurisdiction').textContent = jurisdiction;
 
-  // Officer details (from register form)
-  const officerName  = data.officerName  || 'Frank Taylor';
-  const officerBadge = data.officerBadge || 'AG-8841';
+  // Officer details — always from LOGIN page (portalOfficer), never overwritten by register
+  const officerData  = JSON.parse(localStorage.getItem('portalOfficer') || '{}');
+  const officerName  = officerData.officerName  || data.officerName  || 'Frank Taylor';
+  const officerBadge = officerData.officerBadge || data.officerBadge || 'AG-8841';
 
   document.getElementById('officerNameDisplay').textContent  = officerName;
   document.getElementById('officerBadgeDisplay').textContent = officerBadge;
@@ -433,3 +434,4 @@ tbody td{padding:9px 10px;vertical-align:top;line-height:1.5;}
 </script>
 </body>
 </html>
+
