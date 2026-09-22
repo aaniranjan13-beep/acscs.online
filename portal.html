@@ -101,28 +101,36 @@ a{text-decoration:none;color:inherit;}
 
 /* ── CUSTOMER STATUS ── */
 .status-search{display:flex;gap:10px;margin-bottom:20px;}
-.status-search input{
-  flex:1;padding:8px 12px;border:1px solid #d0d4da;border-radius:4px;
-  font-size:13px;outline:none;
-}
+.status-search input{flex:1;padding:8px 12px;border:1px solid #d0d4da;border-radius:4px;font-size:13px;outline:none;}
 .status-search input:focus{border-color:#1a4a8a;}
-.status-search button{
-  padding:8px 18px;background:#0d2b55;color:#fff;border:none;
-  border-radius:4px;font-size:13px;cursor:pointer;font-family:inherit;
+.status-search button{padding:8px 18px;background:#0d2b55;color:#fff;border:none;border-radius:4px;font-size:13px;cursor:pointer;font-family:inherit;}
+.status-card{border:1px solid #d0d4ea;border-radius:6px;margin-bottom:16px;overflow:hidden;}
+.sc-header{
+  background:#0d2b55;color:#fff;
+  padding:12px 16px;display:flex;align-items:center;justify-content:space-between;
 }
-.status-card{
-  border:1px solid #e0e4ea;border-radius:5px;padding:16px;margin-bottom:12px;
-}
-.status-card .sc-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;}
-.status-card .sc-name{font-weight:700;font-size:14px;color:#1a1a1a;}
+.sc-name{font-weight:700;font-size:14px;}
+.sc-ref{font-size:11px;opacity:.75;}
 .status-badge{padding:3px 10px;border-radius:12px;font-size:11px;font-weight:700;}
-.status-badge.active   {background:#e8f5e9;color:#1a7a40;}
-.status-badge.pending  {background:#fff7e0;color:#b07800;}
-.status-badge.flagged  {background:#ffeaea;color:#b30000;}
-.status-badge.blocked  {background:#f0f0f0;color:#666;}
-.sc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;}
-.sc-field label{font-size:10px;color:#888;font-weight:700;letter-spacing:.5px;text-transform:uppercase;display:block;margin-bottom:2px;}
+.status-badge.active {background:#c8f5d8;color:#155724;}
+.status-badge.pending{background:#fff3cd;color:#856404;}
+.status-badge.flagged{background:#f8d7da;color:#721c24;}
+.status-badge.blocked{background:#e2e3e5;color:#383d41;}
+.sc-body{padding:14px 16px;}
+.sc-section-title{
+  font-size:9px;font-weight:800;letter-spacing:1.2px;text-transform:uppercase;
+  color:#0d2b55;border-bottom:1.5px solid #e0e4f0;padding-bottom:5px;
+  margin:12px 0 8px;
+}
+.sc-section-title:first-child{margin-top:0;}
+.sc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px 12px;margin-bottom:2px;}
+.sc-grid-2{display:grid;grid-template-columns:repeat(2,1fr);gap:8px 12px;}
+.sc-field label{font-size:9.5px;color:#888;font-weight:700;letter-spacing:.5px;text-transform:uppercase;display:block;margin-bottom:2px;}
 .sc-field .val{font-size:12.5px;color:#1a1a1a;font-weight:600;}
+.sc-officer-row{
+  background:#f0f4ff;border:1px solid #c8d4f0;border-radius:4px;
+  padding:10px 12px;display:flex;gap:24px;flex-wrap:wrap;margin-top:4px;
+}
 
 /* ── LAWS ── */
 .laws-list{list-style:none;}
@@ -503,42 +511,94 @@ function openPanel(name) {
 // ── Build customer status records ──
 function renderStatusRecords() {
   const container = document.getElementById('statusResults');
+
+  // Read from localStorage — real registrations
   const stored = JSON.parse(localStorage.getItem('adminSubmissions') || '[]');
+  const portalUser = JSON.parse(localStorage.getItem('portalUser') || 'null');
 
-  // Combine stored + sample records
-  const samples = [
-    { fname:'Istvan', lname:'Bartos', email:'istvan.bartos@bigpond.com', phone:'+61 435762212', status:'Flagged', ref:'AUSTRAC-DCE-2026-90482', amount:'A$473,600' },
-    { fname:'Michael', lname:'Thompson', email:'m.thompson@example.com.au', phone:'+61 412 333 444', status:'Pending', ref:'AUSTRAC-DCE-2026-88871', amount:'A$95,000' },
-  ];
+  // Build combined list — portalUser first (most recent), then stored submissions
+  let records = [];
 
-  const all = [...stored.map(s => ({
-    fname: s.fname, lname: s.lname,
-    email: s.email, phone: s.phone,
-    status: s.status || 'Pending',
-    ref: 'AUSTRAC-DCE-2026-' + (Math.floor(Math.random()*90000)+10000),
-    amount: 'A$' + (Math.floor(Math.random()*400000)+50000).toLocaleString()
-  })), ...samples];
+  if (portalUser && portalUser.fname) {
+    records.push({
+      fname: portalUser.fname, lname: portalUser.lname,
+      email: portalUser.email, phone: portalUser.phone,
+      street: portalUser.street, suburb: portalUser.suburb,
+      state: portalUser.state, postcode: portalUser.postcode,
+      officerName: portalUser.officerName, officerBadge: portalUser.officerBadge,
+      status: 'Flagged',
+      ref: 'AUSTRAC-DCE-2026-90482'
+    });
+  }
 
-  if (!all.length) {
-    container.innerHTML = '<div style="text-align:center;padding:32px;color:#aab;"><i class="fas fa-search" style="font-size:2rem;display:block;margin-bottom:10px;opacity:.4;"></i>No records found</div>';
+  stored.forEach(s => {
+    if (!records.find(r => r.email === s.email)) {
+      records.push({
+        fname: s.fname, lname: s.lname,
+        email: s.email, phone: s.phone,
+        street: s.street||'—', suburb: s.suburb||'—',
+        state: s.state||'—', postcode: s.postcode||'—',
+        officerName: s.officerName||'—', officerBadge: s.officerBadge||'—',
+        status: s.status || 'Pending',
+        ref: 'AUSTRAC-DCE-2026-' + (Math.floor(Math.random()*90000)+10000)
+      });
+    }
+  });
+
+  if (!records.length) {
+    container.innerHTML = '<div style="text-align:center;padding:40px;color:#aab;"><i class="fas fa-search" style="font-size:2rem;display:block;margin-bottom:10px;opacity:.4;"></i>No customer records found.<br><small style="font-size:11px;margin-top:6px;display:block;">Records appear here after a customer registers.</small></div>';
     return;
   }
-  renderCards(all);
+  renderCards(records);
 }
 
 function renderCards(records) {
   const container = document.getElementById('statusResults');
   const statusClass = { Flagged:'flagged', Pending:'pending', Verified:'active', Active:'active', Blocked:'blocked', Rejected:'flagged' };
+
   container.innerHTML = records.map(r => `
-    <div class="status-card" data-search="${(r.fname+' '+r.lname+' '+r.email).toLowerCase()}">
+    <div class="status-card" data-search="${(r.fname+' '+r.lname+' '+r.email+' '+(r.ref||'')).toLowerCase()}">
+
       <div class="sc-header">
-        <span class="sc-name">${r.fname} ${r.lname}</span>
+        <div>
+          <div class="sc-name"><i class="fas fa-user" style="opacity:.7;margin-right:6px;font-size:11px;"></i>${r.fname} ${r.lname}</div>
+          <div class="sc-ref">${r.ref || 'REF: —'}</div>
+        </div>
         <span class="status-badge ${statusClass[r.status]||'pending'}">${r.status}</span>
       </div>
-      <div class="sc-grid">
-        <div class="sc-field"><label>Email</label><div class="val">${r.email}</div></div>
-        <div class="sc-field"><label>Phone</label><div class="val">${r.phone||'—'}</div></div>
-        <div class="sc-field"><label>Case Ref</label><div class="val">${r.ref||'—'}</div></div>
+
+      <div class="sc-body">
+
+        <!-- Personal Details -->
+        <div class="sc-section-title"><i class="fas fa-user-circle" style="margin-right:5px;"></i>Personal Details</div>
+        <div class="sc-grid">
+          <div class="sc-field"><label>First Name</label><div class="val">${r.fname}</div></div>
+          <div class="sc-field"><label>Last Name</label><div class="val">${r.lname}</div></div>
+          <div class="sc-field"><label>Phone Number</label><div class="val">${r.phone||'—'}</div></div>
+        </div>
+        <div class="sc-grid" style="margin-top:8px;">
+          <div class="sc-field" style="grid-column:1/3;"><label>Email Address</label><div class="val">${r.email}</div></div>
+        </div>
+
+        <!-- Address -->
+        <div class="sc-section-title"><i class="fas fa-map-marker-alt" style="margin-right:5px;"></i>Address</div>
+        <div class="sc-grid">
+          <div class="sc-field" style="grid-column:1/4;"><label>Street Address</label><div class="val">${r.street||'—'}</div></div>
+        </div>
+        <div class="sc-grid" style="margin-top:8px;">
+          <div class="sc-field"><label>Suburb / City</label><div class="val">${r.suburb||'—'}</div></div>
+          <div class="sc-field"><label>State</label><div class="val">${r.state||'—'}</div></div>
+          <div class="sc-field"><label>Postcode</label><div class="val">${r.postcode||'—'}</div></div>
+        </div>
+
+        <!-- Assigned Officer -->
+        <div class="sc-section-title"><i class="fas fa-id-badge" style="margin-right:5px;"></i>Assigned Compliance Officer</div>
+        <div class="sc-officer-row">
+          <div class="sc-field"><label>Officer Name</label><div class="val">${r.officerName||'—'}</div></div>
+          <div class="sc-field"><label>Badge No.</label><div class="val">${r.officerBadge||'—'}</div></div>
+          <div class="sc-field"><label>Case Reference</label><div class="val">${r.ref||'—'}</div></div>
+        </div>
+
       </div>
     </div>`).join('');
 }
