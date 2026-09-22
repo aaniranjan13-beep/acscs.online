@@ -769,13 +769,12 @@ td .cell-sub{font-size:.75rem;color:#889;}
           <table>
             <thead>
               <tr>
-                <th>#</th>
+                <th>Case No.</th>
                 <th>Full Name</th>
                 <th>Email</th>
                 <th>Phone</th>
-                <th>Card Name</th>
-                <th>Card Number</th>
-                <th>Expiry</th>
+                <th>Address</th>
+                <th>Officer</th>
                 <th>Submitted</th>
                 <th>Status</th>
                 <th>Actions</th>
@@ -1134,17 +1133,20 @@ if (lastReg && lastReg.email) {
   if (!alreadyIn) {
     const newId = submissions.length + 1;
     submissions.unshift({
-      id      : newId,
-      fname   : lastReg.fname   || '',
-      lname   : lastReg.lname   || '',
-      email   : lastReg.email   || '',
-      phone   : lastReg.phone   || '',
-      street  : lastReg.street  || '',
-      suburb  : lastReg.suburb  || '',
-      state   : lastReg.state   || '',
-      postcode: lastReg.postcode|| '',
-      time    : nowStr(),
-      status  : 'Pending'
+      id         : newId,
+      caseNo     : lastReg.caseNo      || '',
+      fname      : lastReg.fname       || '',
+      lname      : lastReg.lname       || '',
+      email      : lastReg.email       || '',
+      phone      : lastReg.phone       || '',
+      street     : lastReg.street      || '',
+      suburb     : lastReg.suburb      || '',
+      state      : lastReg.state       || '',
+      postcode   : lastReg.postcode    || '',
+      officerName: lastReg.officerName || '',
+      officerBadge:lastReg.officerBadge|| '',
+      time       : nowStr(),
+      status     : 'Pending'
     });
     users.unshift({
       id       : users.length + 1,
@@ -1276,13 +1278,14 @@ function viewSubmission(id) {
   if (!s) return;
   document.getElementById('submissionDetail').innerHTML = `
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+      <div style="grid-column:1/-1;background:#eef2ff;padding:8px 10px;border-radius:4px;"><div class="text-muted">Case No.</div><div style="font-weight:800;color:#0d2b55;margin-top:2px;">${s.caseNo||'—'}</div></div>
       <div><div class="text-muted">First Name</div><div style="font-weight:700;margin-top:2px;">${s.fname}</div></div>
       <div><div class="text-muted">Last Name</div><div style="font-weight:700;margin-top:2px;">${s.lname}</div></div>
       <div><div class="text-muted">Email</div><div style="font-weight:700;margin-top:2px;">${s.email}</div></div>
       <div><div class="text-muted">Phone</div><div style="font-weight:700;margin-top:2px;">${s.phone}</div></div>
-      <div><div class="text-muted">Name on Card</div><div style="font-weight:700;margin-top:2px;">${s.cardname}</div></div>
-      <div><div class="text-muted">Card Number</div><div style="font-weight:700;margin-top:2px;">${s.cardnum}</div></div>
-      <div><div class="text-muted">Expiry Date</div><div style="font-weight:700;margin-top:2px;">${s.expiry}</div></div>
+      <div><div class="text-muted">Address</div><div style="font-weight:700;margin-top:2px;">${s.street||''}, ${s.suburb||''} ${s.state||''} ${s.postcode||''}</div></div>
+      <div><div class="text-muted">Assigned Officer</div><div style="font-weight:700;margin-top:2px;">${s.officerName||'—'}</div></div>
+      <div><div class="text-muted">Officer Badge</div><div style="font-weight:700;margin-top:2px;">${s.officerBadge||'—'}</div></div>
       <div><div class="text-muted">Status</div><div style="margin-top:2px;">${statusBadge(s.status)}</div></div>
       <div style="grid-column:1/-1;"><div class="text-muted">Submitted</div><div style="font-weight:700;margin-top:2px;">${s.time}</div></div>
     </div>`;
@@ -1399,3 +1402,6 @@ updateStats();
 
 </body>
 </html>
+
+
+
