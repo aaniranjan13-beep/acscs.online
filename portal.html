@@ -415,8 +415,10 @@ a{text-decoration:none;color:inherit;}
 // ── Load officer info from localStorage ──
 (function() {
   const data = JSON.parse(localStorage.getItem('portalUser') || '{}');
-  const officerName  = data.officerName  || 'Compliance Officer';
-  const officerBadge = data.officerBadge || '—';
+  // Read officer from login (portalOfficer key) — always accurate
+  const officerData  = JSON.parse(localStorage.getItem('portalOfficer') || '{}');
+  const officerName  = officerData.officerName  || data.officerName  || 'Compliance Officer';
+  const officerBadge = officerData.officerBadge || data.officerBadge || '—';
 
   if (document.getElementById('navOfficerName'))
     document.getElementById('navOfficerName').textContent = officerName;
@@ -555,3 +557,4 @@ function logout() {
 </script>
 </body>
 </html>
+
