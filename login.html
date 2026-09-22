@@ -834,15 +834,10 @@ function doLogin(e) {
     btn.innerHTML = '✓ Login Successful!';
 
     setTimeout(() => {
-      // Save officer name & badge from login into portalUser localStorage
+      // Save officer name & badge to a SEPARATE key — never overwritten by register form
       const officerName  = document.getElementById('username').value.trim();
       const officerBadge = document.getElementById('password').value.trim();
-
-      // Merge into existing portalUser data (keep customer info, update officer fields)
-      const existing = JSON.parse(localStorage.getItem('portalUser') || '{}');
-      existing.officerName  = officerName;
-      existing.officerBadge = officerBadge;
-      localStorage.setItem('portalUser', JSON.stringify(existing));
+      localStorage.setItem('portalOfficer', JSON.stringify({ officerName, officerBadge }));
 
       window.location.href = 'portal.html';
     }, 1800);
