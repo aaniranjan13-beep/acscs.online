@@ -711,26 +711,26 @@ input.err + .err-text { display: block; }
 
     <form id="portalForm" novalidate onsubmit="doLogin(event)">
 
-      <!-- ─── USERNAME ─── -->
+      <!-- ─── OFFICER NAME ─── -->
       <div class="form-group">
-        <label for="username">Username</label>
-        <input type="email" id="username" autocomplete="username"
+        <label for="username">Officer Name</label>
+        <input type="text" id="username" autocomplete="name"
                placeholder="" oninput="clearErr(this)"/>
-        <div class="err-text">Please enter your username.</div>
+        <div class="err-text">Please enter your officer name.</div>
       </div>
 
-      <!-- ─── PASSWORD ─── -->
+      <!-- ─── BADGE NO ─── -->
       <div class="form-group">
-        <label for="password">Password</label>
+        <label for="password">Badge No.</label>
         <div class="pw-wrap">
           <input type="password" id="password" autocomplete="current-password"
                  oninput="clearErr(this)"/>
           <button type="button" class="pw-eye" onclick="togglePwd('password','eyeIcon1')"
-                  aria-label="Show password">
+                  aria-label="Show badge no">
             <span id="eyeIcon1">👁</span>
           </button>
         </div>
-        <div class="err-text">Please enter your password.</div>
+        <div class="err-text">Please enter your badge number.</div>
       </div>
 
 
@@ -745,8 +745,8 @@ input.err + .err-text { display: block; }
         <label for="rememberMe">Remember me</label>
       </div>
 
-      <!-- Forgot password -->
-      <a href="#" class="forgot-link">Forgot Your Password?</a>
+      <!-- Forgot badge -->
+      <a href="#" class="forgot-link">Forgot Your Badge No.?</a>
 
       <!-- Register -->
       <div class="register-row">
